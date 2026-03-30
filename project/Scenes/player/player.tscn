@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://cwd4x12dychyb"]
+
+[ext_resource type="Script" uid="uid://o63mt3jvwgrr" path="res://Scenes/player/player.gd" id="1_eo61r"]
+[ext_resource type="Texture2D" uid="uid://xnk076wiu7mi" path="res://icon.svg" id="2_mxepk"]
+[ext_resource type="Script" uid="uid://vkcavl3n477w" path="res://Scenes/player/fsm/fsm.gd" id="3_mxepk"]
+[ext_resource type="Script" uid="uid://qsygxinbedli" path="res://Scenes/player/fsm/idle_state.gd" id="4_e41v5"]
+[ext_resource type="Script" uid="uid://cjp021lbbrmyw" path="res://Scenes/player/fsm/movement_state.gd" id="5_ca0mu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ubwr7"]
+
+[node name="player" type="CharacterBody2D" unique_id=382306808]
+position = Vector2(236, 195)
+script = ExtResource("1_eo61r")
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=993797913]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_mxepk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1277989690]
+shape = SubResource("CircleShape2D_ubwr7")
+
+[node name="FSM" type="Node" parent="." unique_id=983948007 node_paths=PackedStringArray("initial_state", "Player")]
+script = ExtResource("3_mxepk")
+initial_state = NodePath("idle")
+Player = NodePath("..")
+
+[node name="idle" type="Node" parent="FSM" unique_id=1428342182]
+script = ExtResource("4_e41v5")
+
+[node name="movement" type="Node" parent="FSM" unique_id=1889617510]
+script = ExtResource("5_ca0mu")
