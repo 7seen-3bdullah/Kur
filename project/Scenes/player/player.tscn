@@ -3,13 +3,14 @@
 [ext_resource type="Script" uid="uid://o63mt3jvwgrr" path="res://Scenes/player/player.gd" id="1_eo61r"]
 [ext_resource type="Texture2D" uid="uid://xnk076wiu7mi" path="res://icon.svg" id="2_mxepk"]
 [ext_resource type="Script" uid="uid://vkcavl3n477w" path="res://Scenes/player/fsm/fsm.gd" id="3_mxepk"]
-[ext_resource type="Script" uid="uid://qsygxinbedli" path="res://Scenes/player/fsm/idle_state.gd" id="4_e41v5"]
-[ext_resource type="Script" uid="uid://cjp021lbbrmyw" path="res://Scenes/player/fsm/movement_state.gd" id="5_ca0mu"]
+[ext_resource type="Script" uid="uid://qsygxinbedli" path="res://Scenes/player/fsm/idle.gd" id="4_e41v5"]
+[ext_resource type="Script" uid="uid://cjp021lbbrmyw" path="res://Scenes/player/fsm/movement.gd" id="5_ca0mu"]
+[ext_resource type="Script" uid="uid://bku6yhitla53w" path="res://Scenes/player/fsm/jump.gd" id="6_6upyo"]
+[ext_resource type="Script" uid="uid://cvq8wr4itv1w7" path="res://Scenes/player/fsm/fall.gd" id="7_xxarj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ubwr7"]
 
 [node name="player" type="CharacterBody2D" unique_id=382306808]
-position = Vector2(236, 195)
 script = ExtResource("1_eo61r")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=993797913]
@@ -29,3 +30,9 @@ script = ExtResource("4_e41v5")
 
 [node name="movement" type="Node" parent="FSM" unique_id=1889617510]
 script = ExtResource("5_ca0mu")
+
+[node name="jump" type="Node" parent="FSM" unique_id=1688000698]
+script = ExtResource("6_6upyo")
+
+[node name="fall" type="Node" parent="FSM" unique_id=208854299]
+script = ExtResource("7_xxarj")
