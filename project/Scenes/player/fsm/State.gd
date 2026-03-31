@@ -13,7 +13,10 @@ var gravity:float = 1000.0
 var fall_multiplier:float = 1.5
 var jump_cut:float = 0.5
 var max_fall_speed:float = 1200.0
-
+var jump_dir:int=1:
+	set(value):
+		if value != 1 or value != -1:
+			push_error("the Jump Direction value is: ", value)
 
 func Enter():
 	pass

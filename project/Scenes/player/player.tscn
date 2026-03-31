@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://cjp021lbbrmyw" path="res://Scenes/player/fsm/movement.gd" id="5_ca0mu"]
 [ext_resource type="Script" uid="uid://bku6yhitla53w" path="res://Scenes/player/fsm/jump.gd" id="6_6upyo"]
 [ext_resource type="Script" uid="uid://cvq8wr4itv1w7" path="res://Scenes/player/fsm/fall.gd" id="7_xxarj"]
+[ext_resource type="Script" uid="uid://bfbq6s6qq3j82" path="res://Scenes/player/fsm/wallslide.gd" id="8_6k3cy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ubwr7"]
 
@@ -36,3 +37,6 @@ script = ExtResource("6_6upyo")
 
 [node name="fall" type="Node" parent="FSM" unique_id=208854299]
 script = ExtResource("7_xxarj")
+
+[node name="wallslide" type="Node" parent="FSM" unique_id=1254396223]
+script = ExtResource("8_6k3cy")

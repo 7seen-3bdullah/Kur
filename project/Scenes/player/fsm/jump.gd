@@ -9,6 +9,12 @@ func process_physics(delta:float):
 	if Input.is_action_just_pressed("ui_accept"):
 		if parent.is_on_floor():
 			parent.velocity.y = jump_velocity
+		else:
+			#TO DO: more power jumb meby?
+			if parent.is_on_wall():
+				parent.velocity.y = jump_velocity
+				#jumb direction
+	
 	if Input.is_action_just_released("ui_accept") and parent.velocity.y < 0:
 		parent.velocity.y *= jump_cut
 	
