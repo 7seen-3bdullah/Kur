@@ -4,6 +4,7 @@ class_name State
 @warning_ignore("unused_signal")
 signal state_transition
 
+var is_transitioning = false
 var parent: player
 var move_speed :float= 300.0
 var acc: = 2000.0
@@ -17,6 +18,8 @@ var jump_dir:int=1:
 	set(value):
 		if value != 1 or value != -1:
 			push_error("the Jump Direction value is: ", value)
+
+static var can_slide:bool=true
 
 func Enter():
 	pass

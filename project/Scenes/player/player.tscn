@@ -40,3 +40,11 @@ script = ExtResource("7_xxarj")
 
 [node name="wallslide" type="Node" parent="FSM" unique_id=1254396223]
 script = ExtResource("8_6k3cy")
+
+[node name="raycast" type="Node2D" parent="." unique_id=939618984]
+
+[node name="right_wall" type="RayCast2D" parent="raycast" unique_id=1550740688]
+target_position = Vector2(20, 0)
+
+[node name="left_wall" type="RayCast2D" parent="raycast" unique_id=1332292004]
+target_position = Vector2(-20, 0)
