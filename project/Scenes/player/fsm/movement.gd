@@ -11,20 +11,21 @@ func process_physics(delta:float):
 	var accel = acc if abs(target_speed) > abs(parent.velocity.x) else dec
 	parent.velocity.x = move_toward(parent.velocity.x, target_speed, accel * delta)
 	
-	
 	_transtiion(movement)
 	parent.move_and_slide()
 
 func _transtiion(dir):
-	if Input.is_action_just_pressed("ui_accept") and !is_transitioning:
-		is_transitioning = true
-		state_transition.emit(self,"jump")
+	if Input.is_action_just_pressed("ui_accept"):
+		if !is_transitioning and parent.is_on_floor():
+			is_transitioning = true
+			state_transition.emit(self,"jump")
 	if dir == 0 and is_zero_approx(parent.velocity.x):
 		if parent.is_on_floor()and !is_transitioning:
 			is_transitioning = true
 			state_transition.emit(self,"idle")
-	if !parent.is_on_floor()and !is_transitioning:
+	if !parent.is_on_floor() and !is_transitioning:
 		is_transitioning=true
+		coyote_jump=true
 		state_transition.emit(self,"fall")
 
 func Exit():

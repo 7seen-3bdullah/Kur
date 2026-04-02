@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name player
 
+@export var line_2d: Line2D
+
 @onready var state_machine: FiniteStateMachine = $FSM
 @onready var right_wall: RayCast2D = $raycast/right_wall
 @onready var left_wall: RayCast2D = $raycast/left_wall
@@ -17,8 +19,10 @@ func _process(delta: float) -> void:
 	state_machine.process(delta)
 func _physics_process(delta: float) -> void:
 	state_machine.process_physics(delta)
-	
 	Ray_wall_collide()
+	
+	if velocity != Vector2.ZERO:
+		line_2d.add_point(global_position)
 
 
 func Ray_wall_collide():

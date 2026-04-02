@@ -1,20 +1,22 @@
 extends State
 
+var jump_locked := false
 
 func Enter():
 	print("states: jump enter")
 	is_transitioning=false
+	jump_locked = Input.is_action_pressed("ui_accept")
 
 
 func process_physics(delta:float):
+	
 	if Input.is_action_pressed("ui_accept"):
-		if parent.is_on_floor():
+		if parent.is_on_floor() or coyote_jump:
 			parent.velocity.y = jump_velocity
-		else:
-			#TO DO: more power jumb meby?
-			if parent.is_on_wall():
-				parent.velocity.y = jump_velocity
-				parent.velocity.x = jump_velocity * parent.nearest_wall
+			coyote_jump = parent.is_on_floor()
+		
+		input_buffer_timer = input_buffer_delay
+	
 	
 	if Input.is_action_just_released("ui_accept") and parent.velocity.y < 0:
 		parent.velocity.y *= jump_cut
@@ -38,6 +40,13 @@ func _gravity(delta: float):
 		parent.velocity.y = max_fall_speed
 
 func _transtiion():
+	if parent.is_on_wall() and !parent.is_on_floor() and !is_transitioning and parent.velocity.y >0:
+		is_transitioning=true
+		state_transition.emit(self,"wallslide")
+		if input_buffer_timer >0:
+			walljump_buffer_timer=true
+			print("buffer jump: ", walljump_buffer_timer)
+		return
 	if parent.velocity.y >0 and !is_transitioning:
 		is_transitioning=true
 		state_transition.emit(self,"fall")

@@ -12,10 +12,15 @@ func process_input(event: InputEvent):
 			is_transitioning=true
 			state_transition.emit(self, "movement")
 	
-	if event.is_action_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept"):
 		if !is_transitioning:
 			is_transitioning=true
+			coyote_jump=true
 			state_transition.emit(self,"jump")
+
+func process_physics(delta:float):
+	if !parent.is_on_floor():
+		state_transition.emit(self,"fall")
 
 func Exit():
 	print("states: idle exit")
