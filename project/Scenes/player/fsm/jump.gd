@@ -6,6 +6,8 @@ func Enter():
 	print("states: jump enter")
 	is_transitioning=false
 	jump_locked = Input.is_action_pressed("ui_accept")
+	
+	parent.state_tween("before_jump","after_jump")
 
 
 func process_physics(delta:float):

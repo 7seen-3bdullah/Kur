@@ -2,9 +2,11 @@ extends State
 
 
 func Enter():
+	print("states: fall enter")
 	is_transitioning=false
 	coyote_timer = input_buffer_delay
-	print("states: fall enter")
+	
+	parent.state_tween("fall")
 
 func process_input(event: InputEvent):
 	if event.is_action_pressed("ui_accept"):
@@ -49,7 +51,7 @@ func _transition(dir):
 			parent.velocity.y = jump_velocity
 			is_transitioning=true
 			return
-		#TO DO: buffer jumb
+		
 		if dir == 0:
 			if !is_transitioning:
 				is_transitioning=true
@@ -58,6 +60,8 @@ func _transition(dir):
 			if !is_transitioning:
 				is_transitioning=true
 				state_transition.emit(self,"movement")
+		
+		parent.state_tween("before_touch_grownd","after_touch_grownd")
 	else:
 		if Input.is_action_just_pressed("ui_accept") and coyote_timer>0 and !is_transitioning:
 			state_transition.emit(self,"jump")

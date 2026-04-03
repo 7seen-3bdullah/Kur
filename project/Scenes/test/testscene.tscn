@@ -9,6 +9,7 @@ size = Vector2(508, 20)
 [node name="testscene" type="Node2D" unique_id=2099453901]
 
 [node name="Line2D" type="Line2D" parent="." unique_id=803850865]
+visible = false
 width = 2.0
 default_color = Color(1, 0, 0, 1)
 
@@ -54,3 +55,7 @@ shape = SubResource("RectangleShape2D_q3318")
 [node name="player" parent="." unique_id=382306808 node_paths=PackedStringArray("line_2d") instance=ExtResource("2_q3318")]
 position = Vector2(847, 47)
 line_2d = NodePath("../Line2D")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1172697693]
+position = Vector2(893, 292)
+zoom = Vector2(3, 3)

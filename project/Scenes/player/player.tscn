@@ -12,10 +12,13 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ubwr7"]
 
-[node name="player" type="CharacterBody2D" unique_id=382306808]
+[node name="player" type="CharacterBody2D" unique_id=382306808 node_paths=PackedStringArray("Icon")]
 script = ExtResource("1_eo61r")
+Icon = NodePath("Icon")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=993797913]
+
+[node name="Icon2" type="Sprite2D" parent="Icon" unique_id=1083711798]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_mxepk")
 
