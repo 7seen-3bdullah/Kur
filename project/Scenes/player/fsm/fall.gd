@@ -4,13 +4,10 @@ extends State
 func Enter():
 	print("states: fall enter")
 	is_transitioning=false
+	walljump_buffer_timer=false
 	coyote_timer = input_buffer_delay
 	
 	parent.state_tween("fall")
-
-func process_input(event: InputEvent):
-	if event.is_action_pressed("ui_accept"):
-		input_buffer_timer = input_buffer_delay
 
 
 func process_physics(delta:float):
@@ -75,6 +72,8 @@ func _transition(dir):
 			if input_buffer_timer >0:
 				walljump_buffer_timer=true
 				print("buffer jump: ", walljump_buffer_timer)
+			
+			parent.state_tween("normal")
 
 func Exit():
 	print("states: fall exit")

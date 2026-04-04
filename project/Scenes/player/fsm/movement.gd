@@ -2,8 +2,10 @@ extends State
 
 
 func Enter():
-	is_transitioning=false
 	print("states: movment enter")
+	
+	is_transitioning=false
+	walljump_buffer_timer=false
 
 func process_physics(delta:float):
 	var movement = Input.get_axis("ui_left","ui_right")

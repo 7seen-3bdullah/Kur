@@ -3,6 +3,7 @@ extends State
 func Enter():
 	print("states: idle enter")
 	is_transitioning=false
+	walljump_buffer_timer=false
 	parent.velocity = Vector2.ZERO
 
 
@@ -15,7 +16,6 @@ func process_input(event: InputEvent):
 	if Input.is_action_just_pressed("ui_accept"):
 		if !is_transitioning:
 			is_transitioning=true
-			coyote_jump=true
 			state_transition.emit(self,"jump")
 
 func process_physics(delta:float):
