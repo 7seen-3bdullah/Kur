@@ -4,6 +4,7 @@ extends State
 func Enter():
 	print("states: movment enter")
 	
+	parent.is_swining=false
 	is_transitioning=false
 	walljump_buffer_timer=false
 
@@ -14,6 +15,7 @@ func process_physics(delta:float):
 	parent.velocity.x = move_toward(parent.velocity.x, target_speed, accel * delta)
 	
 	_transtiion(movement)
+	_gravity(delta)
 	parent.move_and_slide()
 
 func _transtiion(dir):
@@ -29,6 +31,15 @@ func _transtiion(dir):
 		is_transitioning=true
 		coyote_jump=true
 		state_transition.emit(self,"fall")
+
+func _gravity(delta: float):
+	if !parent.is_on_floor():
+		if parent.velocity.y > 0:
+			parent.velocity.y += gravity * delta * fall_multiplier
+		else:
+			parent.velocity.y += gravity * delta
+	if parent.velocity.y > max_fall_speed:
+		parent.velocity.y = max_fall_speed
 
 func Exit():
 	print("states: movment exit")

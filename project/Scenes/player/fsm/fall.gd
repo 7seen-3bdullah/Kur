@@ -6,6 +6,7 @@ func Enter():
 	is_transitioning=false
 	walljump_buffer_timer=false
 	coyote_timer = input_buffer_delay
+	parent.is_swining=false
 	
 	parent.state_tween("fall")
 

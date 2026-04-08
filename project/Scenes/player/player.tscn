@@ -12,7 +12,7 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ubwr7"]
 
-[node name="player" type="CharacterBody2D" unique_id=382306808 node_paths=PackedStringArray("Icon")]
+[node name="player" type="CharacterBody2D" unique_id=382306808 node_paths=PackedStringArray("Icon") groups=["player"]]
 script = ExtResource("1_eo61r")
 Icon = NodePath("Icon")
 
@@ -47,6 +47,8 @@ script = ExtResource("8_6k3cy")
 
 [node name="walljump" type="Node" parent="FSM" unique_id=562316200]
 script = ExtResource("9_kd672")
+
+[node name="swining" type="Node" parent="FSM" unique_id=324326813]
 
 [node name="raycast" type="Node2D" parent="." unique_id=939618984]
 

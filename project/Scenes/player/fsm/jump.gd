@@ -13,6 +13,10 @@ func Enter():
 
 
 func process_physics(delta:float):
+	if parent.is_swining and !is_transitioning:
+		state_transition.emit(self,"fall")
+		is_transitioning=true
+		return
 	
 	if Input.is_action_pressed("ui_accept"):
 		if parent.is_on_floor() or coyote_jump:

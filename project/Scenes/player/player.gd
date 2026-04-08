@@ -12,8 +12,8 @@ var nearest_wall:int=0
 var slide_time:float=0.0
 var run_time: float = 0.0
 var updown:=0.0
+var is_swining:bool=false
 var tween:Tween
-var _state = State.new()
 var tween_data:Dictionary={
 	"before_touch_grownd":[Vector2(1.2,0.7),0.06,Tween.EASE_OUT,Tween.TRANS_CUBIC],
 	"after_touch_grownd":[Vector2(1,1),0.1,Tween.EASE_OUT,Tween.TRANS_QUAD],
@@ -24,25 +24,24 @@ var tween_data:Dictionary={
 }
 
 func _ready() -> void:
+	Global.Player=self
 	right_wall.add_exception(self)
 	left_wall.add_exception(self)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	state_machine.process_input(event)
 func _process(delta: float) -> void:
 	state_machine.process(delta)
 func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
-		updown+=0.1
-		print("vibration is: ", updown)
-	Input.start_joy_vibration(0,updown,updown,0)
+	
 	if velocity != Vector2.ZERO and line_2d:
 		line_2d.add_point(global_position)
 	
 	state_machine.process_physics(delta)
 	Ray_wall_collide()
 	if is_on_floor():
-		run_squash(delta, _state.move_speed)
+		run_squash(delta, Global.GlobalState.move_speed)
 
 
 func Ray_wall_collide():
@@ -97,6 +96,8 @@ func wall_slide(delta: float):
 	)
 	Icon.scale = target_scale
 	print("update slide time: ", Icon.scale)
+	
+	#joy vibration
 
 func run_squash(delta: float, max_speed: float):
 	var speed = abs(velocity.x)

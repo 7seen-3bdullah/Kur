@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://ls0b8yo6pu28"]
+
+[ext_resource type="Script" uid="uid://dhcon57d4h4nw" path="res://Scenes/swining/swingplace.gd" id="1_3vdmx"]
+[ext_resource type="Texture2D" uid="uid://xnk076wiu7mi" path="res://icon.svg" id="2_kjrvy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_asjbp"]
+radius = 50.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3vdmx"]
+
+[node name="Swingarya" type="Area2D" unique_id=1842356678]
+script = ExtResource("1_3vdmx")
+Radius = 50.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1629128140]
+shape = SubResource("CircleShape2D_asjbp")
+
+[node name="anchore" type="StaticBody2D" parent="." unique_id=992145828]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="anchore" unique_id=945055924]
+shape = SubResource("RectangleShape2D_3vdmx")
+debug_color = Color(0.701143, 0.49109715, 0, 0.6862745)
+
+[node name="PinJoint2D" type="PinJoint2D" parent="." unique_id=1237536253]
+node_a = NodePath("../anchore")
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=704330611]
+modulate = Color(0, 0, 0, 1)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_kjrvy")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
