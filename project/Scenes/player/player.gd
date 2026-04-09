@@ -2,7 +2,7 @@ extends CharacterBody2D
 class_name player
 
 @export var line_2d: Line2D
-@export var Icon:Sprite2D
+@export var Icon:AnimatedSprite2D
 
 @onready var state_machine: FiniteStateMachine = $FSM
 @onready var right_wall: RayCast2D = $raycast/right_wall
@@ -114,13 +114,16 @@ func run_squash(delta: float, max_speed: float):
 	
 	var wave = (sin(run_time) + 1.0) * 0.5
 	var target_scale = Vector2(
-		#قيمة مؤقتة تتغير بالعدين بالتحتهة
-		lerp(1.0, 1.2, wave),
-		lerp(1.0, 0.8, wave)
+		lerp(1.02, 1.05, wave),
+		lerp(0.98, 0.95, wave)
 	)
-		#lerp(1.02, 1.05, wave),
-		#lerp(0.98, 0.95, wave)
-	#)
 	
 	Icon.scale = Icon.scale.lerp(target_scale, 10 * delta)
 	print("update move scale: ", Icon.scale)
+
+func set_animation(Name:String=""):
+	if name == "":
+		push_error("non animation name selected!")
+		return
+	
+	Icon.play(Name)

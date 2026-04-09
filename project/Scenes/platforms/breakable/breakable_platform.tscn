@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://d1c3e7nj7q7xf"]
+
+[ext_resource type="Shader" uid="uid://c08hrj4abi1q5" path="res://Scenes/platforms/breakable/breakable_platform.gdshader" id="1_cdvtc"]
+[ext_resource type="Script" uid="uid://c00jks64bsu3o" path="res://Scenes/platforms/breakable/breakable_platform.gd" id="1_vmdme"]
+[ext_resource type="Texture2D" uid="uid://xnk076wiu7mi" path="res://icon.svg" id="2_vmdme"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cx1x1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pvgdr"]
+size = Vector2(24, 18)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3d5ep"]
+shader = ExtResource("1_cdvtc")
+shader_parameter/Shake = false
+shader_parameter/amplitude = 0.050000002375
+shader_parameter/speed = 0.6000000285
+shader_parameter/X_shake = true
+shader_parameter/Y_shake = true
+
+[sub_resource type="Animation" id="Animation_3d5ep"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:material:shader_parameter/Shake")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_p70qw"]
+resource_name = "shake"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:material:shader_parameter/Shake")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x1gbm"]
+_data = {
+&"RESET": SubResource("Animation_3d5ep"),
+&"shake": SubResource("Animation_p70qw")
+}
+
+[node name="BreakablePlatform" type="StaticBody2D" unique_id=754116624]
+script = ExtResource("1_vmdme")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=585338160]
+shape = SubResource("RectangleShape2D_cx1x1")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1365865987]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1745074942]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_pvgdr")
+debug_color = Color(0.99699646, 0.05073563, 1.92523e-07, 0.41960785)
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=914574280]
+modulate = Color(1, 1, 0, 1)
+material = SubResource("ShaderMaterial_3d5ep")
+scale = Vector2(0.16, 0.16)
+texture = ExtResource("2_vmdme")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=230956722]
+libraries/ = SubResource("AnimationLibrary_x1gbm")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

@@ -9,6 +9,9 @@ func Enter():
 	walljump_buffer_timer=false
 
 func process_physics(delta:float):
+	if stuck_in_idle:
+		state_transition.emit(self,"idle")
+	
 	var movement = Input.get_axis("ui_left","ui_right")
 	var target_speed = movement * move_speed
 	var accel = acc if abs(target_speed) > abs(parent.velocity.x) else dec

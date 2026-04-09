@@ -4,8 +4,8 @@ class_name State
 @warning_ignore("unused_signal")
 signal state_transition
 
-var is_transitioning = false
 var parent
+var is_transitioning:bool = false
 var move_speed :float= 180.0
 var acc: = 1200.0
 var dec: = 1500.0
@@ -23,6 +23,7 @@ var jump_dir:int=1
 static var can_slide:bool=true
 static var walljump_buffer_timer:bool=false
 static var coyote_jump:bool=false
+static var stuck_in_idle:bool=false
 
 func Enter():
 	pass
