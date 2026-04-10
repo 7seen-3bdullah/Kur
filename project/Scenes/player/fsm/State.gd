@@ -6,15 +6,20 @@ signal state_transition
 
 var parent
 var is_transitioning:bool = false
-var move_speed :float= 180.0
-var acc: = 1200.0
-var dec: = 1500.0
-var jump_velocity:float = -300.0
-var wall_jump_velocity:float = -250.0
-var gravity:float = 900.0
-var fall_multiplier:float = 1.5
-var jump_cut:float = 0.5
-var max_fall_speed:float = 500.0
+
+var move_speed :float = 110.0
+var acc: = 800.0
+var dec: = 1000.0
+
+var jump_velocity:float = -240.0
+var wall_jump_velocity:float = -200.0
+
+var gravity:float = 700.0
+var fall_multiplier:float = 1.3
+
+var jump_cut:float = 0.6
+var max_fall_speed:float = 420.0
+
 var input_buffer_timer:float=0.0
 var input_buffer_delay:float= .1
 var coyote_timer:float=0.0

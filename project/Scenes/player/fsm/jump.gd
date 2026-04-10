@@ -4,6 +4,8 @@ var jump_locked := false
 
 func Enter():
 	print("states: jump enter")
+	super()
+	
 	is_transitioning=false
 	walljump_buffer_timer=false
 	coyote_jump = false

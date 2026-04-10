@@ -3,6 +3,7 @@ extends State
 
 func Enter():
 	print("states: movment enter")
+	parent.set_animation("run")
 	
 	parent.is_swining=false
 	is_transitioning=false
@@ -25,6 +26,7 @@ func _transtiion(dir):
 	if Input.is_action_just_pressed("ui_accept"):
 		if !is_transitioning and parent.is_on_floor():
 			is_transitioning = true
+			parent.set_animation("jump")
 			state_transition.emit(self,"jump")
 	if dir == 0 and is_zero_approx(parent.velocity.x):
 		if parent.is_on_floor()and !is_transitioning:

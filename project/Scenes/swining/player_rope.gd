@@ -2,6 +2,8 @@ extends RigidBody2D
 
 @export var Player:player
 
+@onready var icon: Sprite2D = $Icon
+
 var prev_sign = 0
 var center:Vector2
 var time_kill:float=0.4
@@ -9,6 +11,7 @@ var x_vel:float=150.0
 var y_vel:float=-350.0
 var dir:int
 var can_jump:bool=true
+var icon_position:Vector2
 
 func _ready() -> void:
 	if Global.Player.global_position.x > get_parent().global_position.x:
@@ -16,6 +19,7 @@ func _ready() -> void:
 	else:
 		dir = 1
 	x_vel *= dir
+
 
 func _physics_process(delta: float) -> void:
 	if center:
@@ -29,8 +33,8 @@ func _physics_process(delta: float) -> void:
 		Global.Player.show()
 		if can_jump:
 			if abs(rotation_degrees) >= 120:
-				Global.Player.velocity.x = x_vel
-				Global.Player.velocity.y = y_vel
+				Global.Player.velocity.x = x_vel/1.3
+				Global.Player.velocity.y = y_vel/1.5
 			elif abs(rotation_degrees) < 120:
 				if abs(rotation_degrees) >= 60:
 					Global.Player.velocity.x = x_vel/1.5

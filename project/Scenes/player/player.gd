@@ -15,12 +15,12 @@ var updown:=0.0
 var is_swining:bool=false
 var tween:Tween
 var tween_data:Dictionary={
-	"before_touch_grownd":[Vector2(1.2,0.7),0.06,Tween.EASE_OUT,Tween.TRANS_CUBIC],
-	"after_touch_grownd":[Vector2(1,1),0.1,Tween.EASE_OUT,Tween.TRANS_QUAD],
-	"before_jump":[Vector2(1.2,0.85),0.08,Tween.EASE_OUT,Tween.TRANS_CUBIC],
-	"after_jump":[Vector2(0.85,1.2),0.1,Tween.EASE_OUT,Tween.TRANS_QUINT],
-	"fall":[Vector2(1.1,0.85),0.15,Tween.EASE_IN_OUT,Tween.TRANS_QUAD],
-	"normal":[Vector2(1,1),0.1,Tween.EASE_OUT,Tween.TRANS_QUAD]
+	"before_touch_grownd":[Vector2(1.15,0.85),0.07,Tween.EASE_OUT,Tween.TRANS_CUBIC],
+	"after_touch_grownd":[Vector2(1,1),0.14,Tween.EASE_OUT,Tween.TRANS_BACK],
+	"before_jump":[Vector2(1.12,0.88),0.06,Tween.EASE_OUT,Tween.TRANS_CUBIC],
+	"after_jump":[Vector2(0.88,1.12),0.10,Tween.EASE_OUT,Tween.TRANS_BACK],
+	"fall":[Vector2(1.08,0.92),0.13,Tween.EASE_IN,Tween.TRANS_QUAD],
+	"normal":[Vector2(1,1),0.12,Tween.EASE_OUT,Tween.TRANS_QUAD]
 }
 
 func _ready() -> void:
@@ -34,6 +34,11 @@ func _unhandled_input(event: InputEvent) -> void:
 func _process(delta: float) -> void:
 	state_machine.process(delta)
 func _physics_process(delta: float) -> void:
+	
+	if velocity.x >0:
+		Icon.flip_h=false
+	elif velocity.x <0:
+		Icon.flip_h=true
 	
 	if velocity != Vector2.ZERO and line_2d:
 		line_2d.add_point(global_position)
@@ -88,38 +93,37 @@ func state_tween(state:String, second_state:String=""):
 
 func wall_slide(delta: float):
 	slide_time += delta
-	var wave = (sin(slide_time * 8.0) + 1.0) * 0.5
+	
+	var wave = (sin(slide_time * 4.0) + 1.0) * 0.5
 	
 	var target_scale = Vector2(
-		lerp(0.95, 0.85, wave),
-		lerp(1.05, 1.15, wave)
+		lerp(0.97, 0.92, wave),
+		lerp(1.03, 1.08, wave)
 	)
-	Icon.scale = target_scale
-	print("update slide time: ", Icon.scale)
 	
-	#joy vibration
+	Icon.scale = Icon.scale.lerp(target_scale, 6 * delta)
 
 func run_squash(delta: float, max_speed: float):
 	var speed = abs(velocity.x)
 	
 	if speed < 0.05:
-		Icon.scale = Icon.scale.lerp(Vector2.ONE, 10 * delta)
+		Icon.scale = Icon.scale.lerp(Vector2.ONE, 8 * delta)
 		run_time = 0.0
 		return
 	
 	var speed_ratio = clamp(speed / max_speed, 0.0, 1.0)
-	var frequency = lerp(3.5, 6.5, speed_ratio)
+	var frequency = lerp(2.5, 4.5, speed_ratio)
 	
 	run_time += delta * frequency
 	
 	var wave = (sin(run_time) + 1.0) * 0.5
+	
 	var target_scale = Vector2(
-		lerp(1.02, 1.05, wave),
-		lerp(0.98, 0.95, wave)
+		lerp(1.01, 1.04, wave),
+		lerp(0.99, 0.96, wave)
 	)
 	
-	Icon.scale = Icon.scale.lerp(target_scale, 10 * delta)
-	print("update move scale: ", Icon.scale)
+	Icon.scale = Icon.scale.lerp(target_scale, 8 * delta)
 
 func set_animation(Name:String=""):
 	if name == "":

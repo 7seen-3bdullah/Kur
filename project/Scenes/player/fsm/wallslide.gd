@@ -19,6 +19,8 @@ var tween_slide:bool=false
 
 func Enter():
 	print("states: wallslide enter")
+	parent.set_animation("wall_slide")
+	
 	timer_to_fall = slide_timer
 	input_x=input_x_delay
 	time_for_sliding = slide_delay

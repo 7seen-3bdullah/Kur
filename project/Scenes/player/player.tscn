@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cwd4x12dychyb"]
 
 [ext_resource type="Script" uid="uid://o63mt3jvwgrr" path="res://Scenes/player/player.gd" id="1_eo61r"]
-[ext_resource type="Texture2D" uid="uid://xnk076wiu7mi" path="res://icon.svg" id="2_mxepk"]
 [ext_resource type="Texture2D" uid="uid://c260ks7s1uunk" path="res://Assets/Player/AnimationSheet.png" id="2_t3oqc"]
 [ext_resource type="Script" uid="uid://vkcavl3n477w" path="res://Scenes/player/fsm/fsm.gd" id="3_mxepk"]
 [ext_resource type="Script" uid="uid://qsygxinbedli" path="res://Scenes/player/fsm/idle.gd" id="4_e41v5"]
@@ -10,10 +9,6 @@
 [ext_resource type="Script" uid="uid://cvq8wr4itv1w7" path="res://Scenes/player/fsm/fall.gd" id="7_xxarj"]
 [ext_resource type="Script" uid="uid://bfbq6s6qq3j82" path="res://Scenes/player/fsm/wallslide.gd" id="8_6k3cy"]
 [ext_resource type="Script" uid="uid://c1pdt6dqtriwy" path="res://Scenes/player/fsm/walljump.gd" id="9_kd672"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6vj4j"]
-atlas = ExtResource("2_t3oqc")
-region = Rect2(72, 72, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nyrd7"]
 atlas = ExtResource("2_t3oqc")
@@ -26,14 +21,6 @@ region = Rect2(0, 0, 24, 24)
 [sub_resource type="AtlasTexture" id="AtlasTexture_uawwb"]
 atlas = ExtResource("2_t3oqc")
 region = Rect2(24, 0, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ic3d6"]
-atlas = ExtResource("2_t3oqc")
-region = Rect2(0, 72, 24, 24)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_spm8d"]
-atlas = ExtResource("2_t3oqc")
-region = Rect2(24, 72, 24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dpkfr"]
 atlas = ExtResource("2_t3oqc")
@@ -75,9 +62,6 @@ region = Rect2(168, 48, 24, 24)
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6vj4j")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_nyrd7")
 }],
 "loop": false,
@@ -97,17 +81,11 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ic3d6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_spm8d")
-}, {
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_dpkfr")
 }],
 "loop": false,
 "name": &"jump",
-"speed": 5.0
+"speed": 1.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -154,18 +132,13 @@ radius = 3.0
 
 [node name="player" type="CharacterBody2D" unique_id=382306808 node_paths=PackedStringArray("Icon") groups=["player"]]
 script = ExtResource("1_eo61r")
-Icon = NodePath("")
+Icon = NodePath("Icon")
 
 [node name="Icon" type="AnimatedSprite2D" parent="." unique_id=687690876]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_ag54m")
-animation = &"wall_slide"
+animation = &"fall"
 offset = Vector2(0, -4)
-
-[node name="Icon2" type="Sprite2D" parent="Icon" unique_id=1083711798]
-visible = false
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("2_mxepk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1277989690]
 position = Vector2(0, 2)

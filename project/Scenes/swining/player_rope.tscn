@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://djs21ibcyel0f"]
 
 [ext_resource type="Script" uid="uid://ct2a2u6crq46d" path="res://Scenes/swining/player_rope.gd" id="1_gna7y"]
-[ext_resource type="Texture2D" uid="uid://xnk076wiu7mi" path="res://icon.svg" id="2_pd73t"]
+[ext_resource type="Texture2D" uid="uid://c260ks7s1uunk" path="res://Assets/Player/AnimationSheet.png" id="2_gna7y"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gna7y"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_gna7y"]
+radius = 7.0
 
 [node name="player_rope" type="RigidBody2D" unique_id=1352716069]
 collision_layer = 0
@@ -14,8 +15,10 @@ angular_damp = 1.0
 script = ExtResource("1_gna7y")
 
 [node name="Icon" type="Sprite2D" parent="." unique_id=912529686]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("2_pd73t")
+texture_filter = 1
+texture = ExtResource("2_gna7y")
+region_enabled = true
+region_rect = Rect2(7, 7, 10, 17)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2146742339]
-shape = SubResource("RectangleShape2D_gna7y")
+shape = SubResource("CircleShape2D_gna7y")

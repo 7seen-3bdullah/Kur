@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://xnk076wiu7mi" path="res://icon.svg" id="1_2sqmk"]
 [ext_resource type="PackedScene" uid="uid://cwd4x12dychyb" path="res://Scenes/player/player.tscn" id="2_q3318"]
 [ext_resource type="PackedScene" uid="uid://ls0b8yo6pu28" path="res://Scenes/swining/swingplace.tscn" id="3_w8pm8"]
+[ext_resource type="PackedScene" uid="uid://d1c3e7nj7q7xf" path="res://Scenes/platforms/breakable/breakable_platform.tscn" id="4_o85rw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q3318"]
 size = Vector2(508, 20)
@@ -132,11 +133,13 @@ position = Vector2(696, 64)
 line_2d = NodePath("../Line2D")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1172697693]
-position = Vector2(893, 292)
-zoom = Vector2(2, 2)
+position = Vector2(736, 344)
 
 [node name="Swingarya" parent="." unique_id=1842356678 instance=ExtResource("3_w8pm8")]
-position = Vector2(752, 272)
+position = Vector2(739, 293)
 
 [node name="Swingarya2" parent="." unique_id=1833006282 instance=ExtResource("3_w8pm8")]
 position = Vector2(1080, 320)
+
+[node name="BreakablePlatform" parent="." unique_id=754116624 instance=ExtResource("4_o85rw")]
+position = Vector2(856, 369)

@@ -2,6 +2,8 @@ extends State
 
 func Enter():
 	print("states: idle enter")
+	parent.set_animation("idle")
+	
 	is_transitioning=false
 	walljump_buffer_timer=false
 	parent.is_swining=false
@@ -19,6 +21,7 @@ func process_physics(delta:float):
 			if Input.is_action_just_pressed("ui_accept"):
 				if !is_transitioning:
 					is_transitioning=true
+					parent.set_animation("jump")
 					state_transition.emit(self,"jump")
 		else:
 			state_transition.emit(self,"fall")

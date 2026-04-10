@@ -1,6 +1,7 @@
 extends State
 
 func Enter():
+	super()
 	pass
 
 func process_physics(delta:float):

@@ -20,6 +20,14 @@ config/icon="res://icon.svg"
 Preloads="*uid://wkll77nyjd4x"
 Global="*uid://bkem1rtmrjisk"
 
+[display]
+
+window/size/viewport_width=320
+window/size/viewport_height=180
+window/size/mode=3
+window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
+
 [input]
 
 ui_accept={
@@ -51,3 +59,8 @@ esc={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":6,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
+
+[rendering]
+
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true

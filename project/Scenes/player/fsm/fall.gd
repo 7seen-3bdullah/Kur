@@ -3,6 +3,8 @@ extends State
 
 func Enter():
 	print("states: fall enter")
+	parent.set_animation("fall")
+	
 	is_transitioning=false
 	walljump_buffer_timer=false
 	coyote_timer = input_buffer_delay

@@ -2,7 +2,7 @@ extends Area2D
 
 @onready var pin_joint_2d: PinJoint2D = $PinJoint2D
 
-@export var Radius :float= 90
+@export var Radius :float= 50
 
 var player_ref:player
 var player_enter:bool=false
@@ -50,6 +50,7 @@ func _spawn_rope(body):
 	
 	player_rope.global_position = snap_to_circle(body.global_position,global_position,Radius)
 	player_rope.center = global_position
+	
 	pin_joint_2d.node_b = player_rope.get_path()
 	player_enter = false
 	print("player pos: ",body.global_position,"rope pos: ",player_rope.global_position)
