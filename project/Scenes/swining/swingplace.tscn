@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dhcon57d4h4nw" path="res://Scenes/swining/swingplace.gd" id="1_3vdmx"]
 [ext_resource type="Texture2D" uid="uid://xnk076wiu7mi" path="res://icon.svg" id="2_kjrvy"]
+[ext_resource type="Texture2D" uid="uid://c260ks7s1uunk" path="res://Assets/Player/AnimationSheet.png" id="3_6kymn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_asjbp"]
 radius = 50.0
@@ -28,6 +29,20 @@ node_a = NodePath("../anchore")
 modulate = Color(0, 0, 0, 1)
 scale = Vector2(0.1, 0.1)
 texture = ExtResource("2_kjrvy")
+
+[node name="playerIcon" type="Sprite2D" parent="." unique_id=1822358266]
+visible = false
+texture_filter = 1
+region_enabled = true
+region_rect = Rect2(7, 7, 10, 17)
+
+[node name="Icon" type="Sprite2D" parent="playerIcon" unique_id=181207739]
+texture_filter = 1
+position = Vector2(-4, 0)
+rotation = 1.5707964
+texture = ExtResource("3_6kymn")
+region_enabled = true
+region_rect = Rect2(7, 7, 10, 17)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]

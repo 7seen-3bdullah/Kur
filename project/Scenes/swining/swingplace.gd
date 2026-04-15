@@ -1,15 +1,18 @@
 extends Area2D
 
 @onready var pin_joint_2d: PinJoint2D = $PinJoint2D
+@onready var player_icon: Sprite2D = $playerIcon
 
 @export var Radius :float= 50
 
 var player_ref:player
-var player_enter:bool=false
 var input_buffer:float=0
 var buffer_delay:=0.1
-var buffer:bool=false
 var dir:int=1
+var player_enter:bool=false
+var buffer:bool=false
+
+var playerrop
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("x"):
@@ -35,6 +38,13 @@ func _physics_process(delta: float) -> void:
 		input_buffer -= delta
 	else:
 		buffer=false
+	
+	if player_icon.visible:
+		if !playerrop:
+			player_icon.hide()
+			return
+		player_icon.position = playerrop.position
+		player_icon.look_at(position)
 
 
 func _on_body_entered(body: Node2D) -> void:
@@ -46,11 +56,17 @@ func _spawn_rope(body):
 	monitoring = false
 	
 	var player_rope = Preloads.plaer_rope.instantiate()
+	var ridus_rope:Vector2
+	
+	
 	add_child(player_rope)
+	ridus_rope = snap_to_circle(body.global_position,global_position,Radius)
 	
-	player_rope.global_position = snap_to_circle(body.global_position,global_position,Radius)
+	player_rope.global_position = ridus_rope
 	player_rope.center = global_position
-	
+	player_icon.show()
+	playerrop = player_rope
+	player_icon.global_position = body.global_position
 	pin_joint_2d.node_b = player_rope.get_path()
 	player_enter = false
 	print("player pos: ",body.global_position,"rope pos: ",player_rope.global_position)

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bkpe8hnhl52gc"]
+
+[ext_resource type="Script" uid="uid://bc2c22ms21idc" path="res://Scenes/swining/swining_node.gd" id="1_2gno4"]
+[ext_resource type="Texture2D" uid="uid://xnk076wiu7mi" path="res://icon.svg" id="2_nkcwt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wlp58"]
+radius = 61.008198
+
+[node name="swiningNode" type="Node2D" unique_id=893850405]
+position = Vector2(156, 81)
+script = ExtResource("1_2gno4")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1621060941]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1486237508]
+shape = SubResource("CircleShape2D_wlp58")
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=1398515492]
+position = Vector2(-13, 2)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_nkcwt")

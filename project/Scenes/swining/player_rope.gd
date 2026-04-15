@@ -2,7 +2,7 @@ extends RigidBody2D
 
 @export var Player:player
 
-@onready var icon: Sprite2D = $Icon
+#@onready var icon: Sprite2D = $Icon
 
 var prev_sign = 0
 var center:Vector2

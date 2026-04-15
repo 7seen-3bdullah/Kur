@@ -15,7 +15,7 @@ var start_sliding_timer:float
 var jump_locked := false
 var tween_slide:bool=false
 
-#to do: jump wall cayoute
+#problem: the player dos not do wall jump when stell press space. the problem meb
 
 func Enter():
 	print("states: wallslide enter")
@@ -28,7 +28,7 @@ func Enter():
 	tween_slide_delay = 0.1
 	is_transitioning=false
 	tween_slide=false
-	jump_locked = Input.is_action_pressed("ui_accept")
+	#jump_locked = Input.is_action_pressed("ui_accept"c)x
 
 
 func process(delta:float):
