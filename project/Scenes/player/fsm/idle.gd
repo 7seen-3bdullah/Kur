@@ -23,6 +23,12 @@ func process_physics(delta:float):
 					is_transitioning=true
 					parent.set_animation("jump")
 					state_transition.emit(self,"jump")
+			
+			if parent.hook_dir_coyote_timer > 0 and parent.coyote_x_timer >0 and parent.can_hook:
+				if !is_transitioning:
+					is_transitioning = true
+					state_transition.emit(self,"hook")
+		
 		else:
 			state_transition.emit(self,"fall")
 	else:

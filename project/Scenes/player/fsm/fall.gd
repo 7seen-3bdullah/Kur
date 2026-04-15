@@ -45,6 +45,11 @@ func _gravity(delta: float):
 		parent.velocity.y = max_fall_speed
 
 func _transition(dir):
+	if parent.hook_dir_coyote_timer > 0 and parent.coyote_x_timer >0 and parent.can_hook:
+		if !is_transitioning:
+			is_transitioning = true
+			state_transition.emit(self,"hook")
+	
 	if parent.is_on_floor() and is_zero_approx(parent.velocity.y):
 		if input_buffer_timer >0:
 			state_transition.emit(self,"jump")
@@ -69,7 +74,7 @@ func _transition(dir):
 			is_transitioning=true
 			return
 		
-		if parent.is_on_wall() and parent.velocity.y >0 and can_slide and !is_transitioning:
+		if parent.nearest_wall != 0 and parent.velocity.y >0 and can_slide and !is_transitioning:
 			is_transitioning=true
 			state_transition.emit(self,"wallslide")
 			if input_buffer_timer >0:

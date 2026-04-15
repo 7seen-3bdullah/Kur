@@ -4,7 +4,6 @@ var jump_locked := false
 
 func Enter():
 	print("states: jump enter")
-	super()
 	
 	is_transitioning=false
 	walljump_buffer_timer=false
@@ -53,7 +52,12 @@ func _gravity(delta: float):
 		parent.velocity.y = max_fall_speed
 
 func _transtiion():
-	if parent.is_on_wall() and !parent.is_on_floor() and !is_transitioning and parent.velocity.y >0:
+	if parent.hook_dir_coyote_timer > 0 and parent.coyote_x_timer >0 and parent.can_hook:
+		if !is_transitioning:
+			is_transitioning = true
+			state_transition.emit(self,"hook")
+	
+	if parent.nearest_wall != 0 and !parent.is_on_floor() and !is_transitioning and parent.velocity.y >0:
 		is_transitioning=true
 		state_transition.emit(self,"wallslide")
 		if input_buffer_timer >0:

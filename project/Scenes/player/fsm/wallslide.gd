@@ -60,7 +60,7 @@ func process_physics(delta:float):
 	if Input.is_action_just_released("ui_accept"):
 		jump_locked=false
 	
-	if Input.is_action_just_pressed("ui_accept") and parent.is_on_wall() or (walljump_buffer_timer and !jump_locked):
+	if Input.is_action_just_pressed("ui_accept") and parent.nearest_wall != 0 or (walljump_buffer_timer and !jump_locked):
 		start_sliding_timer = 0
 		parent.velocity.x = wall_jump_velocity/1.2 * parent.nearest_wall
 		parent.velocity.y = wall_jump_velocity

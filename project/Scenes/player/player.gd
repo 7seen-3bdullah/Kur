@@ -7,11 +7,21 @@ class_name player
 @onready var state_machine: FiniteStateMachine = $FSM
 @onready var right_wall: RayCast2D = $raycast/right_wall
 @onready var left_wall: RayCast2D = $raycast/left_wall
+@onready var hook_raycast: RayCast2D = $raycast/hookRaycast
 
 var nearest_wall:int=0
 var slide_time:float=0.0
 var run_time: float = 0.0
 var updown:=0.0
+var can_hook:bool=false
+var hook_raycast_dir:Vector2
+var hook_target_position:Vector2
+var last_input_dir: Vector2i = Vector2i.ZERO
+var coyote_time := 0.1
+var hook_dir_coyote_timer := 0.0
+var coyote_x_timer:=0.0
+var coyote_hook_miss:=0.0
+var hook_anchor:Vector2
 var is_swining:bool=false
 var tween:Tween
 var tween_data:Dictionary={
@@ -27,6 +37,8 @@ func _ready() -> void:
 	Global.Player=self
 	right_wall.add_exception(self)
 	left_wall.add_exception(self)
+	hook_raycast.add_exception(self)
+	hook_target_position = hook_raycast.target_position
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -44,6 +56,8 @@ func _physics_process(delta: float) -> void:
 		line_2d.add_point(global_position)
 	
 	state_machine.process_physics(delta)
+	Input_dir_update(delta)
+	Hook(delta)
 	Ray_wall_collide()
 	if is_on_floor():
 		run_squash(delta, Global.GlobalState.move_speed)
@@ -59,6 +73,54 @@ func Ray_wall_collide():
 	else:
 		nearest_wall = 0
 	print("nearest wall is: ", nearest_wall)
+
+
+func Input_dir_update(delta):
+	var x_axis := int(Input.get_axis("ui_left","ui_right"))
+	var y_axis := int(Input.get_axis("ui_up","ui_down"))
+	
+	var input_dir := Vector2(x_axis, y_axis).normalized()
+	if input_dir != Vector2.ZERO:
+		last_input_dir = input_dir
+		hook_dir_coyote_timer = coyote_time
+	else:
+		if hook_dir_coyote_timer > 0:
+			hook_dir_coyote_timer -= delta
+			input_dir = last_input_dir
+		else:
+			input_dir = Vector2.ZERO
+	
+	hook_raycast_dir = input_dir
+	print("hook dir: ", hook_raycast_dir)
+
+func Hook(delta):
+	if Input.is_action_just_pressed("x"):
+		coyote_x_timer = coyote_time
+	
+	if coyote_x_timer >0:
+		coyote_x_timer -= delta
+	if coyote_hook_miss > 0:
+		coyote_hook_miss -= delta
+	else:
+		can_hook = false
+	
+	if hook_raycast_dir == Vector2.ZERO:
+		hook_raycast.enabled = false
+		return
+	else:
+		hook_raycast.enabled = true
+	
+	hook_raycast.target_position = hook_target_position
+	hook_raycast.target_position *= hook_raycast_dir
+	
+	print("hook start coll: ", can_hook)
+	
+	if hook_raycast.is_colliding():
+		var body = hook_raycast.get_collider()
+		if body != null and body.is_in_group("Anchor_point"):
+			hook_anchor = body.global_position
+			can_hook = true
+			coyote_hook_miss = coyote_time
 
 
 func state_tween(state:String, second_state:String=""):
