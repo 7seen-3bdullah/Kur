@@ -12,8 +12,8 @@ var acc: = 800.0
 var dec: = 1000.0
 
 var jump_velocity:float = -210.0
-var hook_jump_velocity:float = -200
-var wall_jump_velocity:float = -130.0
+var hook_jump_velocity:float = -250
+var wall_jump_velocity:float = -150.0
 
 var gravity:float = 700.0
 var fall_multiplier:float = 1.3

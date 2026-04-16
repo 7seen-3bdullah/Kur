@@ -180,6 +180,6 @@ target_position = Vector2(8, 0)
 target_position = Vector2(-8, 0)
 
 [node name="hookRaycast" type="RayCast2D" parent="raycast" unique_id=404413418]
-target_position = Vector2(80, 80)
+target_position = Vector2(90, 90)
 collide_with_areas = true
 collide_with_bodies = false

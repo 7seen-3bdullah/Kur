@@ -13,16 +13,19 @@ func Enter():
 func process_physics(delta:float):
 	if !stuck_in_idle:
 		if parent.is_on_floor():
-			if Input.is_action_pressed("ui_left") or Input.is_action_pressed("ui_right"):
-				if !is_transitioning:
-					is_transitioning=true
-					state_transition.emit(self, "movement")
-			
 			if Input.is_action_just_pressed("ui_accept"):
 				if !is_transitioning:
 					is_transitioning=true
 					parent.set_animation("jump")
 					state_transition.emit(self,"jump")
+			
+			
+			var axis = Input.get_axis("ui_left","ui_right")
+			if axis != 0:
+				if !is_transitioning:
+					is_transitioning=true
+					state_transition.emit(self, "movement")
+			
 			
 			if parent.hook_dir_coyote_timer > 0 and parent.coyote_x_timer >0 and parent.can_hook:
 				if !is_transitioning:

@@ -14,6 +14,7 @@ var slide_time:float=0.0
 var run_time: float = 0.0
 var updown:=0.0
 var can_hook:bool=false
+var is_hooking:bool=false
 var hook_raycast_dir:Vector2
 var hook_target_position:Vector2
 var last_input_dir: Vector2i = Vector2i.ZERO
@@ -104,9 +105,8 @@ func Hook(delta):
 	else:
 		can_hook = false
 	
-	if hook_raycast_dir == Vector2.ZERO:
+	if hook_dir_coyote_timer <= 0:
 		hook_raycast.enabled = false
-		return
 	else:
 		hook_raycast.enabled = true
 	
@@ -166,6 +166,7 @@ func wall_slide(delta: float):
 	Icon.scale = Icon.scale.lerp(target_scale, 6 * delta)
 
 func run_squash(delta: float, max_speed: float):
+	return
 	var speed = abs(velocity.x)
 	
 	if speed < 0.05:

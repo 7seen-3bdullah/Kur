@@ -59,7 +59,3 @@ esc={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":6,"pressure":0.0,"pressed":true,"script":null)
 ]
 }
-
-[rendering]
-
-2d/snap/snap_2d_transforms_to_pixel=true
