@@ -7,11 +7,15 @@ class_name player
 @onready var state_machine: FiniteStateMachine = $FSM
 @onready var right_wall: RayCast2D = $raycast/right_wall
 @onready var left_wall: RayCast2D = $raycast/left_wall
-@onready var hook_raycast: RayCast2D = $raycast/hookRaycast
+#@onready var hook_raycast: RayCast2D = $raycast/hookRaycast
+@onready var Hook_raycasts: Node2D = $raycast/hook_raycast
+@onready var hook_rope: Line2D = $Line2D
+
 
 var nearest_wall:int=0
 var slide_time:float=0.0
 var run_time: float = 0.0
+var player_in_wall:bool = false
 var updown:=0.0
 var can_hook:bool=false
 var is_hooking:bool=false
@@ -24,6 +28,7 @@ var coyote_x_timer:=0.0
 var coyote_hook_miss:=0.0
 var hook_anchor:Vector2
 var is_swining:bool=false
+var finsh_flip_fice_tween:bool=false
 var tween:Tween
 var tween_data:Dictionary={
 	"before_touch_grownd":[Vector2(1.15,0.85),0.07,Tween.EASE_OUT,Tween.TRANS_CUBIC],
@@ -31,15 +36,23 @@ var tween_data:Dictionary={
 	"before_jump":[Vector2(1.12,0.88),0.06,Tween.EASE_OUT,Tween.TRANS_CUBIC],
 	"after_jump":[Vector2(0.88,1.12),0.10,Tween.EASE_OUT,Tween.TRANS_BACK],
 	"fall":[Vector2(1.08,0.92),0.13,Tween.EASE_IN,Tween.TRANS_QUAD],
-	"normal":[Vector2(1,1),0.12,Tween.EASE_OUT,Tween.TRANS_QUAD]
+	"breathing":[Vector2(1.02,1.01),0.1,Tween.EASE_IN_OUT,Tween.TRANS_SINE],
+	"idle":[Vector2(1.08,0.93),0.1,Tween.EASE_OUT,Tween.TRANS_SINE],
+	"hook":[Vector2(1.2,0.8),0.08,Tween.EASE_OUT,Tween.TRANS_CUBIC],
+	"normal":[Vector2(1,1),0.12,Tween.EASE_OUT,Tween.TRANS_QUAD],
 }
 
 func _ready() -> void:
 	Global.Player=self
 	right_wall.add_exception(self)
 	left_wall.add_exception(self)
-	hook_raycast.add_exception(self)
-	hook_target_position = hook_raycast.target_position
+	
+	for child in Hook_raycasts.get_children():
+		(child as RayCast2D).add_exception(self)
+	
+	#hook_raycast.add_exception(self)
+	
+	#hook_target_position = hook_raycast.target_position
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -48,10 +61,13 @@ func _process(delta: float) -> void:
 	state_machine.process(delta)
 func _physics_process(delta: float) -> void:
 	
-	if velocity.x >0:
+	if !player_in_wall:
+		if velocity.x >0:
+			Icon.flip_h=false
+		elif velocity.x <0:
+			Icon.flip_h=true
+	else:
 		Icon.flip_h=false
-	elif velocity.x <0:
-		Icon.flip_h=true
 	
 	if velocity != Vector2.ZERO and line_2d:
 		line_2d.add_point(global_position)
@@ -60,6 +76,8 @@ func _physics_process(delta: float) -> void:
 	Input_dir_update(delta)
 	Hook(delta)
 	Ray_wall_collide()
+	hook_raycast_colliding()
+	hook_line()
 	if is_on_floor():
 		run_squash(delta, Global.GlobalState.move_speed)
 
@@ -80,7 +98,7 @@ func Input_dir_update(delta):
 	var x_axis := int(Input.get_axis("ui_left","ui_right"))
 	var y_axis := int(Input.get_axis("ui_up","ui_down"))
 	
-	var input_dir := Vector2(x_axis, y_axis).normalized()
+	var input_dir := Vector2(x_axis, y_axis)
 	if input_dir != Vector2.ZERO:
 		last_input_dir = input_dir
 		hook_dir_coyote_timer = coyote_time
@@ -105,22 +123,65 @@ func Hook(delta):
 	else:
 		can_hook = false
 	
-	if hook_dir_coyote_timer <= 0:
-		hook_raycast.enabled = false
-	else:
-		hook_raycast.enabled = true
+	for child in Hook_raycasts.get_children():
+		if hook_dir_coyote_timer <= 0:
+			(child as RayCast2D).enabled = false
+		else:
+			(child as RayCast2D).enabled = true
 	
-	hook_raycast.target_position = hook_target_position
-	hook_raycast.target_position *= hook_raycast_dir
+	if hook_raycast_dir == Vector2(1,0):
+		Hook_raycasts.rotation_degrees = 0
+	elif hook_raycast_dir == Vector2(0,-1):
+		Hook_raycasts.rotation_degrees = -90
+	elif hook_raycast_dir == Vector2(-1,0):
+		Hook_raycasts.rotation_degrees = 180
+	elif hook_raycast_dir == Vector2(0,1):
+		Hook_raycasts.rotation_degrees = 90
+	if hook_raycast_dir == Vector2(1,-1):
+		Hook_raycasts.rotation_degrees = -45
+	elif hook_raycast_dir == Vector2(1,1):
+		Hook_raycasts.rotation_degrees = 45
+	elif hook_raycast_dir == Vector2(-1,-1):
+		Hook_raycasts.rotation_degrees = -135
+	elif hook_raycast_dir == Vector2(-1,1):
+		Hook_raycasts.rotation_degrees = 135
 	
 	print("hook start coll: ", can_hook)
+
+func hook_raycast_colliding():
+	for child in Hook_raycasts.get_children():
+		if (child as RayCast2D).is_colliding():
+			var body = child.get_collider()
+			if body != null and body.is_in_group("Anchor_point"):
+				hook_anchor = body.global_position
+				can_hook = true
+				coyote_hook_miss = coyote_time
 	
-	if hook_raycast.is_colliding():
-		var body = hook_raycast.get_collider()
-		if body != null and body.is_in_group("Anchor_point"):
-			hook_anchor = body.global_position
-			can_hook = true
-			coyote_hook_miss = coyote_time
+	#if hook_raycast.is_colliding():
+		#var body = hook_raycast.get_collider()
+		#if body != null and body.is_in_group("Anchor_point"):
+			#hook_anchor = body.global_position
+			#can_hook = true
+			#coyote_hook_miss = coyote_time
+
+func hook_line():
+	if Icon.animation == "hook":
+		if Icon.frame == 1:
+			if Icon.flip_h:
+				hook_rope.position.x = -10
+			else:
+				hook_rope.position.x = 10
+			
+			var local_anchor = hook_rope.to_local(hook_anchor)
+			var local_origin = hook_rope.to_local(global_position)
+			hook_rope.points = [
+				local_origin,
+				local_anchor
+			]
+			
+			await get_tree().create_timer(0.08).timeout
+			hook_rope.clear_points()
+			state_tween("after_jump")
 
 
 func state_tween(state:String, second_state:String=""):
@@ -153,6 +214,7 @@ func state_tween(state:String, second_state:String=""):
 			.set_ease(second_data[2])\
 			.set_trans(second_data[3])
 
+
 func wall_slide(delta: float):
 	slide_time += delta
 	
@@ -166,12 +228,37 @@ func wall_slide(delta: float):
 	Icon.scale = Icon.scale.lerp(target_scale, 6 * delta)
 
 func run_squash(delta: float, max_speed: float):
-	return
 	var speed = abs(velocity.x)
 	
 	if speed < 0.05:
 		Icon.scale = Icon.scale.lerp(Vector2.ONE, 8 * delta)
 		run_time = 0.0
+		
+		if Icon.animation == "idle":
+			if Icon.frame == 0 or Icon.frame == 9:
+				var idle_tween
+				var normal_tween
+				if tween_data.has("idle"):
+					idle_tween = tween_data["idle"]
+				else:return
+				if tween_data.has("normal"):
+					normal_tween = tween_data["normal"]
+				else:return
+				
+				if tween:
+					tween.kill()
+				
+				tween = create_tween()
+				finsh_flip_fice_tween = false
+				
+				tween.tween_property(Icon,"scale",idle_tween[0],idle_tween[1])\
+				.set_ease(idle_tween[2]).set_trans(idle_tween[3])
+				
+				tween.tween_property(Icon,"scale",normal_tween[0],0.1)\
+				.set_ease(normal_tween[2]).set_trans(normal_tween[3])
+				
+				await tween.finished
+				finsh_flip_fice_tween = true
 		return
 	
 	var speed_ratio = clamp(speed / max_speed, 0.0, 1.0)

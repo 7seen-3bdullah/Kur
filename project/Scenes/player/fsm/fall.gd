@@ -53,7 +53,6 @@ func _transition(dir):
 	if parent.is_on_floor() and is_zero_approx(parent.velocity.y):
 		if input_buffer_timer >0:
 			state_transition.emit(self,"jump")
-			parent.velocity.y = jump_velocity
 			is_transitioning=true
 			return
 		

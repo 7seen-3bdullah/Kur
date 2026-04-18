@@ -11,6 +11,13 @@ func Enter():
 	jump_locked = Input.is_action_pressed("ui_accept")
 	
 	parent.state_tween("before_jump","after_jump")
+	
+	if parent.is_on_floor() or coyote_jump:
+			parent.velocity.y = jump_velocity
+			coyote_jump = parent.is_on_floor()
+	
+	if Input.is_action_just_released("ui_accept") and parent.velocity.y < 0:
+		parent.velocity.y *= jump_cut
 
 
 func process_physics(delta:float):
@@ -19,16 +26,11 @@ func process_physics(delta:float):
 		is_transitioning=true
 		return
 	
-	if Input.is_action_pressed("ui_accept"):
-		if parent.is_on_floor() or coyote_jump:
-			parent.velocity.y = jump_velocity
-			coyote_jump = parent.is_on_floor()
-	
+	if Input.is_action_just_released("ui_accept") and parent.velocity.y < 0:
+		parent.velocity.y *= jump_cut
 	if Input.is_action_just_pressed("ui_accept") and !parent.is_on_floor():
 		input_buffer_timer = input_buffer_delay
 	
-	if Input.is_action_just_released("ui_accept") and parent.velocity.y < 0:
-		parent.velocity.y *= jump_cut
 	
 	var movement = Input.get_axis("ui_left","ui_right")
 	var target_speed = movement * move_speed
@@ -69,6 +71,7 @@ func _transtiion():
 	if parent.velocity.y >0 and !is_transitioning:
 		is_transitioning=true
 		state_transition.emit(self,"fall")
+
 
 func Exit():
 	print("states: jump exit")
