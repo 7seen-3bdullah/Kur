@@ -7,17 +7,17 @@ func Enter():
 	
 	is_transitioning=false
 	walljump_buffer_timer=false
-	coyote_jump = false
 	jump_locked = Input.is_action_pressed("ui_accept")
 	
 	parent.state_tween("before_jump","after_jump")
 	
 	if parent.is_on_floor() or coyote_jump:
-			parent.velocity.y = jump_velocity
-			coyote_jump = parent.is_on_floor()
+		parent.velocity.y = jump_velocity
+		coyote_jump = false
 	
 	if Input.is_action_just_released("ui_accept") and parent.velocity.y < 0:
 		parent.velocity.y *= jump_cut
+
 
 
 func process_physics(delta:float):
@@ -75,3 +75,5 @@ func _transtiion():
 
 func Exit():
 	print("states: jump exit")
+	
+	coyote_jump = false

@@ -22,15 +22,16 @@ func process_physics(delta:float):
 		parent.velocity.x = move_toward(parent.velocity.x, target_speed, accel * delta)
 	
 	
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("ui_accept") and !coyote_jump:
 		input_buffer_timer=input_buffer_delay
 	
 	_gravity(delta)
 	_transition(movement)
 	if input_buffer_timer >0:
 		input_buffer_timer -= delta
-	if coyote_timer >0:
+	if coyote_timer >0 and coyote_jump:
 		coyote_timer -= delta
+		print("coyote_jump: ", coyote_timer)
 	else:
 		coyote_jump=false
 	parent.move_and_slide()
@@ -67,9 +68,8 @@ func _transition(dir):
 		
 		parent.state_tween("before_touch_grownd","after_touch_grownd")
 	else:
-		if Input.is_action_just_pressed("ui_accept") and coyote_timer>0 and !is_transitioning:
+		if Input.is_action_just_pressed("ui_accept") and coyote_jump and !is_transitioning:
 			state_transition.emit(self,"jump")
-			
 			is_transitioning=true
 			return
 		

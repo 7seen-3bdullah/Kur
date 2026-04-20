@@ -1,6 +1,4 @@
-[gd_scene format=3 uid="uid://d1c3e7nj7q7xf"]
-
-[ext_resource type="Script" uid="uid://c00jks64bsu3o" path="res://Scenes/platforms/breakable/breakable_platform.gd" id="1_vmdme"]
+[gd_scene format=3 uid="uid://cpqugyqtfvme2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cx1x1"]
 size = Vector2(16, 16)
@@ -86,8 +84,6 @@ _data = {
 }
 
 [node name="BreakablePlatform" type="StaticBody2D" unique_id=754116624]
-script = ExtResource("1_vmdme")
-breakTime = 0.4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=585338160]
 shape = SubResource("RectangleShape2D_cx1x1")

@@ -14,6 +14,8 @@ var follow_player:bool = false
 
 func _ready() -> void:
 	add_to_group("RoomZoneCamera2D")
+	Global.camera = self
+	
 	player_node = get_tree().get_first_node_in_group("player")
 
 func _process(delta: float) -> void:
@@ -47,6 +49,7 @@ func _physics_process(_delta: float) -> void:
  
 
 func apply_shake(amount: float, duration: float):
+	Input.start_joy_vibration(0, 0.8, 0.8, 0.3)
 	strength = max(amount, strength)
 	shake_time = max(duration, shake_time)
 

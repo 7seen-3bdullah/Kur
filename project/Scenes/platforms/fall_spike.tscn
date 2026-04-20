@@ -1,0 +1,624 @@
+[gd_scene format=3 uid="uid://bshdksf2pc850"]
+
+[ext_resource type="Script" uid="uid://crvwiy6pyvj2j" path="res://Scenes/platforms/fall_spike.gd" id="1_0am86"]
+[ext_resource type="Texture2D" uid="uid://3n80741sbcpy" path="res://Assets/Enviroment.png" id="1_en3ud"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0am86"]
+size = Vector2(6, 91)
+
+[sub_resource type="Shader" id="Shader_0am86"]
+code = "shader_type canvas_item;
+
+uniform bool Shake = true;
+uniform float amplitude: hint_range(0.0, 1.0);
+uniform float speed: hint_range(0.0, 2.0);
+uniform bool X_shake = true;
+uniform bool Y_shake = true;
+void vertex() {
+	if(Shake){
+		float time = TIME * (30. * speed);
+		float wobbling = sin(time) * 40. * amplitude;
+		float direction = sin(time / 2.);
+		
+		if(X_shake && Y_shake){
+			VERTEX += vec2(direction * wobbling,wobbling);
+		}
+		else{
+			
+			if(X_shake && !Y_shake){
+				VERTEX += vec2(direction * wobbling,0.0);
+			}
+			if(!X_shake && Y_shake){
+				VERTEX += vec2(0,wobbling);
+			}
+			}
+		
+	}
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lf8pj"]
+shader = SubResource("Shader_0am86")
+shader_parameter/Shake = false
+shader_parameter/amplitude = 0.02000000095
+shader_parameter/speed = 0.400000019
+shader_parameter/X_shake = true
+shader_parameter/Y_shake = false
+
+[sub_resource type="Shader" id="Shader_pftxa"]
+code = "shader_type canvas_item;
+
+uniform float progress_fall : hint_range(0.0, 1.0) = 0.0;     
+uniform float progress_rotation : hint_range(0.0, 10.0) = 0.0; // Aumentei o range para rotações infinitas
+uniform float progress_scatter : hint_range(0.0, 6.0) = 0.0; 
+uniform float progress_fade : hint_range(0.0, 1.0) = 0.0;     
+
+uniform vec2 grid_size = vec2(10.0, 10.0);
+
+// Física
+uniform float gravity = 6.0;
+uniform float ground_level : hint_range(0.0,2.0) = 0.9;
+uniform float stack_variation = 0.15;
+uniform float slide_on_ground = 0.3;
+
+float rand(vec2 co){
+    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
+const float scale = 2.1;
+
+void vertex() {
+    VERTEX *= 1. + scale;
+}
+
+void fragment() {
+    float total_scale = 1.0 + scale;
+    vec2 local_uv = (UV - REGION_RECT.xy) / REGION_RECT.zw;
+    vec2 adjusted_local_uv = (local_uv - 0.5) * total_scale + 0.5;
+    
+    vec4 final_color = vec4(0.0);
+    vec2 my_cell = floor(adjusted_local_uv * grid_size);
+    bool found = false;
+
+    for (int y = -17; y <= 5; y++) { // Aumentei a margem vertical para não sumir ao espalhar muito
+        for (int x = -8; x <= 8; x++) { // Aumentei a margem horizontal para o scatter alto
+            vec2 check_cell = my_cell + vec2(float(x), float(y));
+
+            if (check_cell.x < 0.0 || check_cell.x >= grid_size.x || check_cell.y < 0.0 || check_cell.y >= grid_size.y) {
+                continue;
+            }
+
+            float r_delay = rand(check_cell) * 0.2;
+            float r_scatter = rand(check_cell + vec2(1.1, 0.0));
+            float r_rotate = rand(check_cell + vec2(0.0, 1.1));
+            float r_stack = rand(check_cell + vec2(1.1, 1.1));
+            float r_slide = rand(check_cell + vec2(2.2, 0.0));
+
+            // --- REMOVIDO O CLAMP DE 0-1 ---
+            // Agora os valores podem crescer além de 1.0
+            float p_fall = clamp((progress_fall - r_delay) / (0.8), 0.0, 1.0);
+            float p_rot = max(progress_rotation - r_delay, 0.0); 
+            float p_scat = max(progress_scatter - r_delay, 0.0);
+
+            vec2 cell_center = (check_cell + vec2(0.5)) / grid_size;
+
+            // --- Posição Vertical ---
+            float fall_dist = gravity * p_fall * p_fall;
+            float personal_ground = ground_level + (r_stack - 0.5) * stack_variation;
+            
+            float final_y = min(cell_center.y + fall_dist, personal_ground);
+            bool is_on_ground = (cell_center.y + fall_dist) >= personal_ground;
+
+            // --- Posição Horizontal (Scatter Destravado) ---
+            // O scatter agora flui livremente conforme progress_scatter aumenta
+            float lateral_move = (r_scatter - 0.5) * 0.4 * p_scat;
+            float ground_slide_val = (r_slide - 0.5) * slide_on_ground * (is_on_ground ? p_scat : 0.0);
+            float final_x = cell_center.x + lateral_move + ground_slide_val;
+
+            vec2 offset = vec2(final_x - cell_center.x, final_y - cell_center.y);
+
+            // --- Rotação (Destravada e Infinita) ---
+            // p_rot agora não para em 1.0, permitindo múltiplas voltas
+            float angle = (r_rotate - 0.5) * 6.0 * p_rot;
+            float c = cos(angle); float s = sin(angle);
+
+            // Mapeamento inverso
+            vec2 rel_uv = adjusted_local_uv - cell_center - offset;
+            vec2 rotated_rel_uv = vec2(rel_uv.x * c - rel_uv.y * s, rel_uv.x * s + rel_uv.y * c);
+            vec2 orig_local_uv = cell_center + rotated_rel_uv;
+
+            if (floor(orig_local_uv * grid_size) == check_cell) {
+                vec2 atlas_uv = orig_local_uv * REGION_RECT.zw + REGION_RECT.xy;
+                vec4 tex_color = texture(TEXTURE, atlas_uv);
+                
+                if (tex_color.a > 0.0) {
+                    float local_fade = clamp((progress_fade - r_delay) / 0.8, 0.0, 1.0);
+                    final_color = vec4(tex_color.rgb, tex_color.a * (1.0 - local_fade));
+                    found = true; 
+                    break;
+                }
+            }
+        }
+        if (found) break;
+    }
+    COLOR = final_color;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g8yw8"]
+shader = SubResource("Shader_pftxa")
+shader_parameter/progress_fall = 0.0
+shader_parameter/progress_rotation = 0.0
+shader_parameter/progress_scatter = 0.0
+shader_parameter/progress_fade = 0.0
+shader_parameter/grid_size = Vector2(10, 10)
+shader_parameter/gravity = 6.0
+shader_parameter/ground_level = 0.9
+shader_parameter/stack_variation = 0.15
+shader_parameter/slide_on_ground = 0.3
+
+[sub_resource type="Animation" id="Animation_pftxa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/X_shake")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/Y_shake")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/speed")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.400000019]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:material:shader_parameter/amplitude")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.02000000095]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:material:shader_parameter/Shake")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../normal2:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../normal2:material:shader_parameter/progress_fall")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../normal2:material:shader_parameter/progress_rotation")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../normal2:material:shader_parameter/progress_scatter")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../normal2:material:shader_parameter/progress_fade")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("../normal2:material:shader_parameter/grid_size")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(10, 10)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("../normal2:material:shader_parameter/gravity")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [6.0]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("../normal2:material:shader_parameter/ground_level")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.9]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("../normal2:material:shader_parameter/stack_variation")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.15]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("../normal2:material:shader_parameter/slide_on_ground")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.3]
+}
+
+[sub_resource type="Animation" id="Animation_n5w0n"]
+resource_name = "break"
+length = 0.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../normal2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../normal2:material:shader_parameter/progress_fall")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 2),
+"update": 0,
+"values": [0.0, 0.6000000285]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../normal2:material:shader_parameter/progress_rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 2),
+"update": 0,
+"values": [0.0, 2.000000095]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../normal2:material:shader_parameter/progress_scatter")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [0.0, 6.0]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../normal2:material:shader_parameter/progress_fade")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../normal2:material:shader_parameter/grid_size")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(5, 5)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../normal2:material:shader_parameter/gravity")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [6.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../normal2:material:shader_parameter/ground_level")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.9, 0.9, 0.400000019]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../normal2:material:shader_parameter/stack_variation")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.15]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../normal2:material:shader_parameter/slide_on_ground")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.3]
+}
+
+[sub_resource type="Animation" id="Animation_lf8pj"]
+resource_name = "shake"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:material:shader_parameter/X_shake")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:material:shader_parameter/Y_shake")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:material:shader_parameter/speed")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.50000002375]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:material:shader_parameter/amplitude")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.050000002375]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:material:shader_parameter/Shake")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../normal2:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_g8yw8"]
+_data = {
+&"RESET": SubResource("Animation_pftxa"),
+&"break": SubResource("Animation_n5w0n"),
+&"shake": SubResource("Animation_lf8pj")
+}
+
+[node name="fall_spike" type="Area2D" unique_id=451278677]
+script = ExtResource("1_0am86")
+
+[node name="coll_enter" type="CollisionShape2D" parent="." unique_id=101304149]
+position = Vector2(0, 48.5)
+shape = SubResource("RectangleShape2D_0am86")
+
+[node name="normal" type="Sprite2D" parent="." unique_id=2064778041]
+texture_filter = 1
+material = SubResource("ShaderMaterial_lf8pj")
+position = Vector2(0, 8)
+texture = ExtResource("1_en3ud")
+offset = Vector2(1, 8)
+region_enabled = true
+region_rect = Rect2(338, 224, 10, 32)
+
+[node name="normal2" type="Sprite2D" parent="." unique_id=761635389]
+visible = false
+texture_filter = 1
+material = SubResource("ShaderMaterial_g8yw8")
+position = Vector2(-1.92, -8.89)
+texture = ExtResource("1_en3ud")
+offset = Vector2(1, 8)
+region_enabled = true
+region_rect = Rect2(336, 224, 16, 32)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=652704009]
+root_node = NodePath("../normal")
+libraries/ = SubResource("AnimationLibrary_g8yw8")
+autoplay = &"RESET"
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=1505173706]
+position = Vector2(0, -1)
+scale = Vector2(1.2, 1)
+enabled = false
+target_position = Vector2(0, 20)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

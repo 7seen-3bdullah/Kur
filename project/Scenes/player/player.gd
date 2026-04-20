@@ -10,6 +10,7 @@ class_name player
 #@onready var hook_raycast: RayCast2D = $raycast/hookRaycast
 @onready var Hook_raycasts: Node2D = $raycast/hook_raycast
 @onready var hook_rope: Line2D = $Line2D
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 
 var nearest_wall:int=0
@@ -19,6 +20,7 @@ var player_in_wall:bool = false
 var updown:=0.0
 var can_hook:bool=false
 var is_hooking:bool=false
+var is_dead:bool=false
 var hook_raycast_dir:Vector2
 var hook_target_position:Vector2
 var last_input_dir: Vector2i = Vector2i.ZERO
@@ -78,9 +80,16 @@ func _physics_process(delta: float) -> void:
 	Ray_wall_collide()
 	hook_raycast_colliding()
 	hook_line()
+	tilemap_collision()
 	if is_on_floor():
 		run_squash(delta, Global.GlobalState.move_speed)
 
+func tilemap_collision():
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if collision.get_collider() is spike_tilemaps:
+			die()
+			return
 
 func Ray_wall_collide():
 	if is_on_floor():
@@ -281,3 +290,13 @@ func set_animation(Name:String=""):
 		return
 	
 	Icon.play(Name)
+
+func die():
+	if is_dead:
+		return
+	
+	is_dead = true
+	call_deferred("_reload_scene")
+
+func _reload_scene():
+	get_tree().reload_current_scene()

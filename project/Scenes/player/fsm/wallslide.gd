@@ -1,6 +1,6 @@
 extends State
 
-@export var slide_speed:float=8.0
+@export var slide_speed:float=6.0
 @export var slide_timer:float=100
 @export var slide_delay:float=0.1
 
@@ -14,6 +14,7 @@ var input_x:float=0
 var start_sliding_timer:float
 var jump_locked := false
 var tween_slide:bool=false
+var jump:bool = false
 
 #problem: the player dos not do wall jump when stell press space. the problem meb
 
@@ -27,6 +28,7 @@ func Enter():
 	tween_slide_delay = 0.1
 	is_transitioning=false
 	tween_slide=false
+	jump = false
 	parent.player_in_wall = true
 	#jump_locked = Input.is_action_pressed("ui_accept"c)x
 
@@ -59,7 +61,7 @@ func process(delta:float):
 	else:
 		parent.set_animation("jump")
 func process_physics(delta:float):
-	if parent.is_on_wall() and !is_zero_approx(timer_to_fall):
+	if parent.is_on_wall() and !is_zero_approx(timer_to_fall) and !jump:
 		if start_sliding_timer <= 0:
 			parent.velocity.y = gravity * slide_speed * delta
 			if tween_slide:
@@ -67,14 +69,16 @@ func process_physics(delta:float):
 	
 	if Input.is_action_just_released("ui_accept"):
 		jump_locked=false
+		jump = false
 	
-	if Input.is_action_just_pressed("ui_accept") and parent.nearest_wall != 0 or (walljump_buffer_timer and !jump_locked):
+	if Input.is_action_just_pressed("ui_accept") and parent.is_on_wall() or (walljump_buffer_timer and !jump_locked):
 		start_sliding_timer = 0
 		parent.velocity.x = wall_jump_velocity * parent.nearest_wall
 		parent.velocity.y = wall_jump_velocity
 		grav_timer = grav_delay
 		input_x=input_x_delay
 		walljump_buffer_timer=false
+		jump = true
 		
 		parent.state_tween("before_jump","after_jump")
 	
@@ -106,12 +110,12 @@ func _transition():
 		
 		parent.state_tween("before_touch_grownd","after_touch_grownd")
 	else:
-		if !parent.is_on_wall() and parent.velocity.y > 0 and !is_transitioning:
+		if parent.nearest_wall ==0 and parent.velocity.y > 0 and !is_transitioning:
 			is_transitioning=true
 			state_transition.emit(self,"fall")
 		
 		var input_axis = Input.get_axis("ui_left","ui_right")
-		if parent.is_on_wall() and input_axis != parent.nearest_wall and input_axis != 0 and input_x <=0 and !is_transitioning:
+		if parent.nearest_wall ==0 and input_axis != parent.nearest_wall and input_axis != 0 and input_x <=0 and !is_transitioning:
 			is_transitioning=true
 			state_transition.emit(self,"fall")
 

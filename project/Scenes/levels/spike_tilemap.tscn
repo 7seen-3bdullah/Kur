@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://cvyc8k23t8p0b"]
+
+[ext_resource type="Script" uid="uid://bl06u0vci6i5e" path="res://Scenes/levels/spike_tilemap.gd" id="1_wga80"]
+
+[node name="TileMap" type="TileMapLayer" unique_id=1997266999]
+navigation_enabled = false
+script = ExtResource("1_wga80")

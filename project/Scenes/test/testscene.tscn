@@ -4,6 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://cwd4x12dychyb" path="res://Scenes/player/player.tscn" id="2_q3318"]
 [ext_resource type="Script" uid="uid://pv8stmxcyttx" path="res://Scripts/RoomZoneArea2d.gd" id="3_w8pm8"]
 [ext_resource type="PackedScene" uid="uid://ceaj80ikr7ndu" path="res://Scenes/camera/room_zone_camera_2d.tscn" id="4_o85rw"]
+[ext_resource type="PackedScene" uid="uid://d1c3e7nj7q7xf" path="res://Scenes/platforms/breakable/breakable_platform.tscn" id="5_gkqou"]
+[ext_resource type="PackedScene" uid="uid://bshdksf2pc850" path="res://Scenes/platforms/fall_spike.tscn" id="6_bjw6v"]
+[ext_resource type="Texture2D" uid="uid://3n80741sbcpy" path="res://Assets/Enviroment.png" id="7_j4wdl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o85rw"]
 size = Vector2(311.25, 166)
@@ -34,6 +37,9 @@ size = Vector2(229, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j4wdl"]
 size = Vector2(207, 20)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7erx3"]
+size = Vector2(23.923435, 3)
+
 [node name="testscene" type="Node2D" unique_id=2099453901]
 
 [node name="Line2D" type="Line2D" parent="." unique_id=803850865]
@@ -42,7 +48,7 @@ width = 2.0
 default_color = Color(1, 0, 0, 1)
 
 [node name="player" parent="." unique_id=382306808 node_paths=PackedStringArray("line_2d") instance=ExtResource("2_q3318")]
-position = Vector2(139, 136)
+position = Vector2(40.975616, 154.5)
 line_2d = NodePath("../Line2D")
 
 [node name="RoomZoneArea2D" type="Area2D" parent="." unique_id=407569657]
@@ -92,7 +98,7 @@ position = Vector2(28, -41.5)
 shape = SubResource("RectangleShape2D_e4htn")
 
 [node name="RoomZoneCamera2D" parent="." unique_id=1172675343 instance=ExtResource("4_o85rw")]
-position = Vector2(328, 118)
+position = Vector2(-280, 96)
 
 [node name="StaticBody2D2" type="Area2D" parent="." unique_id=1500343479 groups=["Anchor_point"]]
 position = Vector2(664, 173)
@@ -323,8 +329,105 @@ horizontal_alignment = 1
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1041968063]
 z_index = -4
-offset_left = -47.0
-offset_top = -32.0
+offset_left = -592.0
+offset_top = -80.0
 offset_right = 968.0
-offset_bottom = 400.0
+offset_bottom = 400.00003
 color = Color(0.3826383, 0.5373938, 0.3695234, 1)
+
+[node name="BreakablePlatform" parent="." unique_id=754116624 instance=ExtResource("5_gkqou")]
+position = Vector2(179.35776, 117.99313)
+rotation = 0.0064536138
+
+[node name="BreakablePlatform2" parent="." unique_id=586539557 instance=ExtResource("5_gkqou")]
+position = Vector2(195.35776, 117.99313)
+
+[node name="BreakablePlatform3" parent="." unique_id=1911610032 instance=ExtResource("5_gkqou")]
+position = Vector2(209.35776, 117.99313)
+
+[node name="BreakablePlatform4" parent="." unique_id=1009324355 instance=ExtResource("5_gkqou")]
+position = Vector2(225.35776, 117.99313)
+
+[node name="BreakablePlatform5" parent="." unique_id=1143387067 instance=ExtResource("5_gkqou")]
+position = Vector2(241.35776, 117.99313)
+
+[node name="BreakablePlatform6" parent="." unique_id=2050164886 instance=ExtResource("5_gkqou")]
+position = Vector2(255.35776, 117.99313)
+
+[node name="BreakablePlatform7" parent="." unique_id=1769332364 instance=ExtResource("5_gkqou")]
+position = Vector2(271.35776, 117.99313)
+
+[node name="fall_spike" parent="." unique_id=451278677 instance=ExtResource("6_bjw6v")]
+position = Vector2(65, 87)
+
+[node name="fall_spike2" parent="." unique_id=1359655710 instance=ExtResource("6_bjw6v")]
+position = Vector2(79, 87)
+
+[node name="fall_spike3" parent="." unique_id=821130397 instance=ExtResource("6_bjw6v")]
+position = Vector2(93, 87)
+
+[node name="fall_spike4" parent="." unique_id=2078748179 instance=ExtResource("6_bjw6v")]
+position = Vector2(108, 87)
+
+[node name="fall_spike5" parent="." unique_id=623102950 instance=ExtResource("6_bjw6v")]
+position = Vector2(122, 87)
+
+[node name="StaticBody2D14" type="StaticBody2D" parent="." unique_id=907278047]
+z_index = -1
+position = Vector2(147, 148.40462)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D14" unique_id=1632049735]
+position = Vector2(12.20866, -8)
+shape = SubResource("RectangleShape2D_7erx3")
+one_way_collision = true
+
+[node name="Enviroment" type="Sprite2D" parent="StaticBody2D14" unique_id=294220120]
+texture_filter = 1
+position = Vector2(12, 5)
+texture = ExtResource("7_j4wdl")
+region_enabled = true
+region_rect = Rect2(157, 240, 22, 29)
+
+[node name="Enviroment2" type="Sprite2D" parent="StaticBody2D14" unique_id=994858399]
+texture_filter = 1
+position = Vector2(23.502405, -7.505932)
+texture = ExtResource("7_j4wdl")
+region_enabled = true
+region_rect = Rect2(431, 257, 1, 2)
+
+[node name="Enviroment3" type="Sprite2D" parent="StaticBody2D14" unique_id=1301878342]
+texture_filter = 1
+position = Vector2(0.5176697, -7.505932)
+texture = ExtResource("7_j4wdl")
+region_enabled = true
+region_rect = Rect2(431, 257, 1, 2)
+
+[node name="StaticBody2D15" type="StaticBody2D" parent="." unique_id=15475941]
+z_index = -1
+position = Vector2(147, 119.62707)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D15" unique_id=797882930]
+position = Vector2(12.20866, -8)
+shape = SubResource("RectangleShape2D_7erx3")
+one_way_collision = true
+
+[node name="Enviroment" type="Sprite2D" parent="StaticBody2D15" unique_id=922605289]
+texture_filter = 1
+position = Vector2(12, 5)
+texture = ExtResource("7_j4wdl")
+region_enabled = true
+region_rect = Rect2(157, 240, 22, 29)
+
+[node name="Enviroment2" type="Sprite2D" parent="StaticBody2D15" unique_id=1811823832]
+texture_filter = 1
+position = Vector2(23.502405, -7.505932)
+texture = ExtResource("7_j4wdl")
+region_enabled = true
+region_rect = Rect2(431, 257, 1, 2)
+
+[node name="Enviroment3" type="Sprite2D" parent="StaticBody2D15" unique_id=613887694]
+texture_filter = 1
+position = Vector2(0.5176697, -7.505932)
+texture = ExtResource("7_j4wdl")
+region_enabled = true
+region_rect = Rect2(431, 257, 1, 2)

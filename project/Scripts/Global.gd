@@ -2,6 +2,7 @@ extends Node
 
 var GlobalState:=State.new()
 var Player
+var camera=null
 
 enum InputDevice {
 	KEYBOARD,
@@ -28,3 +29,7 @@ func slowe_time(time:float,delay:float,freeze:float=0):
 	tween.tween_property(Engine, "time_scale", freeze, time)
 	tween.tween_interval(delay)
 	tween.tween_property(Engine, "time_scale", 1.0, time)
+
+func camera_shake(amount: float, duration: float):
+	if camera:
+		camera.apply_shake(amount, duration)

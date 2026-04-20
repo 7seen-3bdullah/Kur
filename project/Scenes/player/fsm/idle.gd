@@ -33,6 +33,7 @@ func process_physics(delta:float):
 					state_transition.emit(self,"hook")
 		
 		else:
+			coyote_jump=true
 			state_transition.emit(self,"fall")
 	else:
 		parent.velocity.x = 0

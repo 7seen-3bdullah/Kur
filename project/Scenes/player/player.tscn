@@ -272,8 +272,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ubwr7"]
-radius = 4.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p8lfk"]
+radius = 3.0
+height = 10.0
 
 [node name="player" type="CharacterBody2D" unique_id=382306808 node_paths=PackedStringArray("Icon") groups=["player"]]
 script = ExtResource("1_eo61r")
@@ -284,12 +285,12 @@ z_index = 2
 texture_filter = 1
 position = Vector2(0, -3)
 sprite_frames = SubResource("SpriteFrames_ag54m")
-animation = &"wall_slide_right"
+animation = &"idle"
 offset = Vector2(0, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1277989690]
-position = Vector2(0, 1)
-shape = SubResource("CircleShape2D_ubwr7")
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_p8lfk")
 
 [node name="FSM" type="Node" parent="." unique_id=983948007 node_paths=PackedStringArray("initial_state", "Player")]
 script = ExtResource("3_mxepk")
@@ -335,27 +336,27 @@ collide_with_bodies = false
 
 [node name="hook1" type="RayCast2D" parent="raycast/hook_raycast" unique_id=486065412]
 rotation = -0.78516436
-target_position = Vector2(90, 90)
+target_position = Vector2(60, 60)
 collide_with_areas = true
 
 [node name="hook2" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1651489570]
 rotation = -0.8387772
-target_position = Vector2(90, 90)
+target_position = Vector2(60, 60)
 collide_with_areas = true
 
 [node name="hook4" type="RayCast2D" parent="raycast/hook_raycast" unique_id=286213644]
 rotation = -0.8894376
-target_position = Vector2(90, 90)
+target_position = Vector2(60, 60)
 collide_with_areas = true
 
 [node name="hook5" type="RayCast2D" parent="raycast/hook_raycast" unique_id=402670060]
 rotation = -0.67735946
-target_position = Vector2(90, 90)
+target_position = Vector2(60, 60)
 collide_with_areas = true
 
 [node name="hook3" type="RayCast2D" parent="raycast/hook_raycast" unique_id=344291898]
 rotation = -0.7336813
-target_position = Vector2(90, 90)
+target_position = Vector2(60, 60)
 collide_with_areas = true
 
 [node name="Line2D" type="Line2D" parent="." unique_id=1725505230]
