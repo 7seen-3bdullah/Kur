@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bc6bof74x657f"]
+
+[ext_resource type="Texture2D" uid="uid://b4hifasme5vkj" path="res://Assets/Tileset_Cave.png" id="1_0h8cn"]
+[ext_resource type="Script" uid="uid://capkahougupxx" path="res://Scenes/platforms/bounce/jumppad.gd" id="1_iandc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4anw5"]
+radius = 6.0
+
+[node name="jumppad" type="Area2D" unique_id=213962377]
+script = ExtResource("1_iandc")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1005953162]
+texture_filter = 1
+texture = ExtResource("1_0h8cn")
+offset = Vector2(0, -1.5)
+region_enabled = true
+region_rect = Rect2(32, 62, 16, 3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1761089158]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_4anw5")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

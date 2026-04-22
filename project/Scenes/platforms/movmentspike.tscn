@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://cwcyo26h4vbyc"]
+
+[ext_resource type="Texture2D" uid="uid://b4hifasme5vkj" path="res://Assets/Tileset_Cave.png" id="1_577c2"]
+[ext_resource type="Script" uid="uid://kmmjutbn3ooj" path="res://Scenes/platforms/movmentspike.gd" id="1_r825m"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r825m"]
+size = Vector2(54, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fs2y3"]
+size = Vector2(11, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_grr0l"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7l7ys"]
+size = Vector2(18, 15)
+
+[node name="movmentspike" type="Area2D" unique_id=158435894]
+monitorable = false
+script = ExtResource("1_r825m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1308130233]
+position = Vector2(-24, 0)
+shape = SubResource("RectangleShape2D_r825m")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1332428900]
+texture_filter = 1
+rotation = -1.5707964
+texture = ExtResource("1_577c2")
+region_enabled = true
+region_rect = Rect2(128, 48, 16, 16)
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1113974232]
+texture_filter = 1
+position = Vector2(-16, 0)
+rotation = -1.5707964
+texture = ExtResource("1_577c2")
+region_enabled = true
+region_rect = Rect2(0, 48, 16, 16)
+
+[node name="killzone" type="Area2D" parent="." unique_id=634167008]
+monitorable = false
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="killzone" unique_id=1294265912]
+position = Vector2(-14, 0)
+shape = SubResource("RectangleShape2D_fs2y3")
+debug_color = Color(0.70196074, 0, 0, 0.41960785)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1510550937]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1024332296]
+shape = SubResource("RectangleShape2D_grr0l")
+debug_color = Color(0.64712006, 0.70196074, 0, 0.41960785)
+
+[node name="breakzone" type="Area2D" parent="." unique_id=850009422]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="breakzone" unique_id=622871753]
+position = Vector2(1, -2.5)
+shape = SubResource("RectangleShape2D_7l7ys")
+debug_color = Color(0, 0.06032475, 0.70196074, 0.41960785)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="killzone" to="." method="_on_killzone_body_entered"]
+[connection signal="body_entered" from="breakzone" to="." method="_on_breakzone_body_entered"]

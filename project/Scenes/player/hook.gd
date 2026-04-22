@@ -36,7 +36,16 @@ func process_physics(delta:float):
 		else:
 			hooked = true
 			var velo = dir * -hook_jump_velocity
-			parent.velocity = velo
+			var jumping:Vector2
+			if parent.hook_raycast_dir.normalized() == Vector2((-1 or 1),0):
+				if parent.velocity == Vector2.ZERO:
+					if parent.Icon.flip_h:
+						jumping = Vector2(-50,-20)
+					else:jumping = Vector2(50,-20)
+				else:
+					jumping = Vector2(0,-20)
+			
+			parent.velocity = velo + jumping
 			state_transition.emit(self,"fall")
 	
 	if staick_time >0:

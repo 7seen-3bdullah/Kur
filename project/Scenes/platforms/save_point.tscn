@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dcwhtqy4cijxc"]
+
+[ext_resource type="Script" uid="uid://cpex8okkjqjuc" path="res://Scenes/platforms/save_point.gd" id="1_7mlxm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_enawl"]
+size = Vector2(20, 80)
+
+[node name="save_point" type="Area2D" unique_id=898332884]
+script = ExtResource("1_7mlxm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1427103483]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_enawl")
+debug_color = Color(0, 1, 0.015625, 0.41960785)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

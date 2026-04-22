@@ -29,6 +29,10 @@ window/size/mode=3
 window/stretch/mode="canvas_items"
 window/stretch/scale_mode="integer"
 
+[global_group]
+
+Anchor_point=""
+
 [input]
 
 ui_accept={

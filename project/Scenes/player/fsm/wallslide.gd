@@ -1,6 +1,6 @@
 extends State
 
-@export var slide_speed:float=6.0
+@export var slide_speed:float=4.0
 @export var slide_timer:float=100
 @export var slide_delay:float=0.1
 
@@ -30,6 +30,11 @@ func Enter():
 	tween_slide=false
 	jump = false
 	parent.player_in_wall = true
+	
+	if parent.nearest_wall == 1:
+		parent.velocity.x = 16
+	elif parent.nearest_wall == -1:
+		parent.velocity.x = -16
 	#jump_locked = Input.is_action_pressed("ui_accept"c)x
 
 
@@ -71,7 +76,7 @@ func process_physics(delta:float):
 		jump_locked=false
 		jump = false
 	
-	if Input.is_action_just_pressed("ui_accept") and parent.is_on_wall() or (walljump_buffer_timer and !jump_locked):
+	if Input.is_action_just_pressed("ui_accept") and parent.nearest_wall !=0 or (walljump_buffer_timer and !jump_locked):
 		start_sliding_timer = 0
 		parent.velocity.x = wall_jump_velocity * parent.nearest_wall
 		parent.velocity.y = wall_jump_velocity

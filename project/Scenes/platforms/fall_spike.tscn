@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bshdksf2pc850"]
 
 [ext_resource type="Script" uid="uid://crvwiy6pyvj2j" path="res://Scenes/platforms/fall_spike.gd" id="1_0am86"]
-[ext_resource type="Texture2D" uid="uid://3n80741sbcpy" path="res://Assets/Enviroment.png" id="1_en3ud"]
+[ext_resource type="Texture2D" uid="uid://b4hifasme5vkj" path="res://Assets/Tileset_Cave.png" id="2_0am86"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0am86"]
 size = Vector2(6, 91)
@@ -594,20 +594,20 @@ shape = SubResource("RectangleShape2D_0am86")
 texture_filter = 1
 material = SubResource("ShaderMaterial_lf8pj")
 position = Vector2(0, 8)
-texture = ExtResource("1_en3ud")
+texture = ExtResource("2_0am86")
 offset = Vector2(1, 8)
 region_enabled = true
-region_rect = Rect2(338, 224, 10, 32)
+region_rect = Rect2(83, 64, 10, 32)
 
 [node name="normal2" type="Sprite2D" parent="." unique_id=761635389]
 visible = false
 texture_filter = 1
 material = SubResource("ShaderMaterial_g8yw8")
 position = Vector2(-1.92, -8.89)
-texture = ExtResource("1_en3ud")
+texture = ExtResource("2_0am86")
 offset = Vector2(1, 8)
 region_enabled = true
-region_rect = Rect2(336, 224, 16, 32)
+region_rect = Rect2(83, 64, 10, 32)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=652704009]
 root_node = NodePath("../normal")

@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://dt0hwg7fq6msm"]
+
+[ext_resource type="Texture2D" uid="uid://cht0oqj2secge" path="res://Assets/Moving Spikes 32x32 scaled 64x64.png" id="1_i6a4v"]
+[ext_resource type="Script" uid="uid://c35s3fy61nyor" path="res://Scenes/platforms/spikes.gd" id="1_k3d0d"]
+
+[sub_resource type="Animation" id="Animation_k3d0d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(148, 186, 7, 22)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7feyd"]
+resource_name = "new_animation"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(148, 186, 7, 22), Rect2(133, 187, 7, 22)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.95, 1.17), Vector2(1.08, 0.95), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bh0bw"]
+_data = {
+&"RESET": SubResource("Animation_k3d0d"),
+&"new_animation": SubResource("Animation_7feyd")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7feyd"]
+size = Vector2(8, 17)
+
+[node name="spikes" type="Area2D" unique_id=1500160843]
+script = ExtResource("1_k3d0d")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1522744927]
+texture_filter = 1
+position = Vector2(0, -11)
+texture = ExtResource("1_i6a4v")
+region_enabled = true
+region_rect = Rect2(148, 186, 7, 22)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=849728887]
+libraries/ = SubResource("AnimationLibrary_bh0bw")
+autoplay = &"RESET"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2121077592]
+position = Vector2(0, -8.5)
+shape = SubResource("RectangleShape2D_7feyd")
+
+[node name="Timer" type="Timer" parent="." unique_id=1128125103]
+wait_time = 0.3
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

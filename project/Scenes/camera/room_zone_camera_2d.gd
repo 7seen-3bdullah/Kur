@@ -42,6 +42,7 @@ func _process(delta: float) -> void:
 		apply_zone_settings()
 
 
+
 func _physics_process(_delta: float) -> void:
 	if follow_player and player_node:
 		global_position = player_node.global_position
@@ -88,6 +89,7 @@ func apply_zone_settings():
 	follow_player = active_zone.follow_player
 	if !active_zone.follow_player:
 		global_position = active_zone.fixed_position
+	
 	
 	if active_zone.limit_camera:
 		limit_enabled = true

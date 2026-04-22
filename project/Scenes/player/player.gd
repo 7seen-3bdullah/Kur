@@ -31,6 +31,8 @@ var coyote_hook_miss:=0.0
 var hook_anchor:Vector2
 var is_swining:bool=false
 var finsh_flip_fice_tween:bool=false
+var start_timer:=true
+var hook_body
 var tween:Tween
 var tween_data:Dictionary={
 	"before_touch_grownd":[Vector2(1.15,0.85),0.07,Tween.EASE_OUT,Tween.TRANS_CUBIC],
@@ -52,16 +54,23 @@ func _ready() -> void:
 	for child in Hook_raycasts.get_children():
 		(child as RayCast2D).add_exception(self)
 	
-	#hook_raycast.add_exception(self)
-	
-	#hook_target_position = hook_raycast.target_position
+	await (get_tree().create_timer(1).timeout)
+	start_timer = false
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if start_timer:
+		return
+	
 	state_machine.process_input(event)
 func _process(delta: float) -> void:
+	if start_timer:
+		return
+	
 	state_machine.process(delta)
 func _physics_process(delta: float) -> void:
+	if start_timer:
+		return
 	
 	if !player_in_wall:
 		if velocity.x >0:
@@ -95,9 +104,18 @@ func Ray_wall_collide():
 	if is_on_floor():
 		return
 	if right_wall.is_colliding() and !left_wall.is_colliding():
-		nearest_wall = 1
+		var collision = right_wall.get_collider()
+		if collision is spike_tilemaps:
+			nearest_wall = 0
+			return
+		else:nearest_wall = 1
 	elif !right_wall.is_colliding() and left_wall.is_colliding():
-		nearest_wall = -1
+		var collision = left_wall.get_collider()
+		if collision is spike_tilemaps:
+			nearest_wall = 0
+			return
+		else:
+			nearest_wall = -1
 	else:
 		nearest_wall = 0
 	print("nearest wall is: ", nearest_wall)
@@ -116,7 +134,9 @@ func Input_dir_update(delta):
 			hook_dir_coyote_timer -= delta
 			input_dir = last_input_dir
 		else:
-			input_dir = Vector2.ZERO
+			if Icon.flip_h:
+				input_dir = Vector2(-1,0)
+			else:input_dir = Vector2(1,0)
 	
 	hook_raycast_dir = input_dir
 	print("hook dir: ", hook_raycast_dir)
@@ -132,11 +152,6 @@ func Hook(delta):
 	else:
 		can_hook = false
 	
-	for child in Hook_raycasts.get_children():
-		if hook_dir_coyote_timer <= 0:
-			(child as RayCast2D).enabled = false
-		else:
-			(child as RayCast2D).enabled = true
 	
 	if hook_raycast_dir == Vector2(1,0):
 		Hook_raycasts.rotation_degrees = 0
@@ -163,6 +178,7 @@ func hook_raycast_colliding():
 			var body = child.get_collider()
 			if body != null and body.is_in_group("Anchor_point"):
 				hook_anchor = body.global_position
+				hook_body = body
 				can_hook = true
 				coyote_hook_miss = coyote_time
 	
@@ -187,7 +203,7 @@ func hook_line():
 				local_origin,
 				local_anchor
 			]
-			
+			hook_body.hook_enter(hook_raycast_dir.normalized())
 			await get_tree().create_timer(0.08).timeout
 			hook_rope.clear_points()
 			state_tween("after_jump")
@@ -296,7 +312,8 @@ func die():
 		return
 	
 	is_dead = true
-	call_deferred("_reload_scene")
+	await Global.frame_freeze(0.0,0.2)
+	_reload_scene()
 
 func _reload_scene():
 	get_tree().reload_current_scene()

@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://pqn2ggo1bmcp"]
+
+[ext_resource type="Script" uid="uid://c065avv2rc3me" path="res://Scenes/levels/hook_anchore.gd" id="1_0qotc"]
+[ext_resource type="Texture2D" uid="uid://b4hifasme5vkj" path="res://Assets/Tileset_Cave.png" id="1_6kewp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nekgx"]
+size = Vector2(16, 16)
+
+[node name="hook_anchore" type="Area2D" unique_id=1021933979 groups=["Anchor_point"]]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_0qotc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1312817508]
+shape = SubResource("RectangleShape2D_nekgx")
+
+[node name="icon" type="Sprite2D" parent="." unique_id=1870388388]
+z_index = 1
+texture_filter = 1
+texture = ExtResource("1_6kewp")
+region_enabled = true
+region_rect = Rect2(3, 69, 10, 7)
+
+[node name="icon2" type="Sprite2D" parent="icon" unique_id=1757790352]
+visible = false
+z_index = -1
+texture_filter = 1
+texture = ExtResource("1_6kewp")
+region_enabled = true
+region_rect = Rect2(128, 48, 16, 16)

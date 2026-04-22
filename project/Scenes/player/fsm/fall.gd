@@ -16,10 +16,10 @@ func Enter():
 func process_physics(delta:float):
 	var movement = Input.get_axis("ui_left","ui_right")
 	
-	if parent.velocity.y >0:
-		var target_speed = movement * move_speed
-		var accel = acc if abs(target_speed) > abs(parent.velocity.x) else dec
-		parent.velocity.x = move_toward(parent.velocity.x, target_speed, accel * delta)
+	
+	var target_speed = movement * move_speed
+	var accel = acc if abs(target_speed) > abs(parent.velocity.x) else dec
+	parent.velocity.x = move_toward(parent.velocity.x, target_speed, accel * delta)
 	
 	
 	if Input.is_action_just_pressed("ui_accept") and !coyote_jump:

@@ -26,6 +26,10 @@ func _on_body_entered(body: Node2D) -> void:
 		if !cam_node:
 			cam_node = get_tree().get_first_node_in_group("RoomZoneCamera2D")
 		cam_node.overlapping_zones.append(self)
+		
+		Global.Player.start_timer = true
+		await (get_tree().create_timer(0.3).timeout)
+		Global.Player.start_timer = false
 
 func _on_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):

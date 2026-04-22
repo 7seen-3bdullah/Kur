@@ -2,16 +2,17 @@ extends Area2D
 
 var velocity_y := 0.0
 var Gravity := 1200.0
-
 var body_enter:bool=false
 var stop_fall:bool=false
 
+@onready var normal2: Sprite2D = $normal2
+@onready var normal: Sprite2D = $normal
 @onready var target_raycast: RayCast2D = $RayCast2D
 @onready var animation: AnimationPlayer = $AnimationPlayer
 
 func _ready() -> void:
-	$normal.material = $normal.material.duplicate()
-	$normal2.material = $normal2.material.duplicate()
+	normal.material = normal.material.duplicate()
+	normal2.material = normal2.material.duplicate()
 
 func _physics_process(delta: float) -> void:
 	if target_raycast:
@@ -24,7 +25,7 @@ func _physics_process(delta: float) -> void:
 			stop_fall = true
 			animation.play("break")
 			if Global.camera != null:
-				Global.camera.apply_shake(1,3)
+				Global.camera.apply_shake(1,2)
 	
 	
 	if body_enter and !stop_fall:
