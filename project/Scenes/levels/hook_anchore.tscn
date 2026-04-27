@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c065avv2rc3me" path="res://Scenes/levels/hook_anchore.gd" id="1_0qotc"]
 [ext_resource type="Texture2D" uid="uid://b4hifasme5vkj" path="res://Assets/Tileset_Cave.png" id="1_6kewp"]
+[ext_resource type="Texture2D" uid="uid://dgivhi5tbmpef" path="res://Assets/2d_lights_and_shadows_neutral_point_light.webp" id="3_u6rhj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nekgx"]
 size = Vector2(16, 16)
@@ -19,12 +20,17 @@ z_index = 1
 texture_filter = 1
 texture = ExtResource("1_6kewp")
 region_enabled = true
-region_rect = Rect2(3, 69, 10, 7)
+region_rect = Rect2(64, 68, 16, 8)
 
 [node name="icon2" type="Sprite2D" parent="icon" unique_id=1757790352]
 visible = false
-z_index = -1
 texture_filter = 1
+position = Vector2(1, -2)
 texture = ExtResource("1_6kewp")
 region_enabled = true
-region_rect = Rect2(128, 48, 16, 16)
+region_rect = Rect2(52, 69, 8, 5)
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=586816465]
+color = Color(1, 1, 1, 0.58431375)
+texture = ExtResource("3_u6rhj")
+texture_scale = 0.2

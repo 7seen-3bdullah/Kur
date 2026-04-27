@@ -69,6 +69,7 @@ func process_physics(delta:float):
 	if parent.is_on_wall() and !is_zero_approx(timer_to_fall) and !jump:
 		if start_sliding_timer <= 0:
 			parent.velocity.y = gravity * slide_speed * delta
+			parent.slide_particals(true)
 			if tween_slide:
 				parent.wall_slide(delta)
 	
@@ -84,7 +85,7 @@ func process_physics(delta:float):
 		input_x=input_x_delay
 		walljump_buffer_timer=false
 		jump = true
-		
+		parent.slide_particals(false)
 		parent.state_tween("before_jump","after_jump")
 	
 	
@@ -127,3 +128,4 @@ func _transition():
 func Exit():
 	print("states: wallslide exit")
 	parent.player_in_wall = false
+	parent.slide_particals(false)

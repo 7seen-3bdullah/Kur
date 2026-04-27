@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://b4v1vf3b4eau"]
+
+[ext_resource type="Script" uid="uid://4as43ghjf4o7" path="res://Scenes/player/runparticals.gd" id="2_es73n"]
+
+[sub_resource type="Gradient" id="Gradient_hlt0t"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.21176471)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_es73n"]
+gradient = SubResource("Gradient_hlt0t")
+
+[sub_resource type="Curve" id="Curve_es73n"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9931035, 0.123595595), -1.9007477, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_oq7t4"]
+curve = SubResource("Curve_es73n")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8ne87"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+radial_velocity_min = -1.0000223
+radial_velocity_max = 2.9999776
+gravity = Vector3(-5, -5, 0)
+radial_accel_min = -2.2351742e-06
+radial_accel_max = 13.119997
+scale_min = 1.5
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_oq7t4")
+color_ramp = SubResource("GradientTexture1D_es73n")
+
+[node name="runparticals" type="GPUParticles2D" unique_id=1720298149]
+emitting = false
+amount = 40
+lifetime = 0.5
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_8ne87")
+script = ExtResource("2_es73n")
+
+[connection signal="finished" from="." to="." method="_on_finished"]

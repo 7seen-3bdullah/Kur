@@ -3,6 +3,8 @@ extends Node
 const plaer_rope = preload("uid://djs21ibcyel0f")
 const player_texture = preload("uid://bqhue6juny50s")
 const BREAKING_SHADER = preload("uid://bkem7dfitjfev")
+const RUNPARTICALS = preload("uid://b4v1vf3b4eau")
+
 
 var sounds:Dictionary={
 	"Environment":{

@@ -10,6 +10,7 @@ func Enter():
 	jump_locked = Input.is_action_pressed("ui_accept")
 	
 	parent.state_tween("before_jump","after_jump")
+	#parent.jump_particals()
 	
 	if parent.is_on_floor() or coyote_jump:
 		parent.velocity.y = jump_velocity

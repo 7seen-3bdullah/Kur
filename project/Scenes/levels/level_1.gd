@@ -2,6 +2,7 @@ extends Node2D
 @onready var fallstatic: StaticBody2D = $map/fallstatic
 @onready var framelabel: Label = $Label
 
+
 var use_hook = false
 
 func _ready() -> void:
@@ -10,6 +11,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	framelabel.text = str(Engine.get_frames_per_second())
+	
 	
 	if use_hook:
 		if Input.is_action_pressed("ui_up") and Input.is_action_pressed("x"):

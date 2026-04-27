@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://dffgqkcl2kflq"]
+
+[ext_resource type="Texture2D" uid="uid://ceuo2xf3lt4he" path="res://Assets/Player/wall_slide.png" id="1_j27ug"]
+[ext_resource type="Script" uid="uid://ce2smx4y3hjfn" path="res://Scenes/vfx/slide.gd" id="2_71ib4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctrdp"]
+atlas = ExtResource("1_j27ug")
+region = Rect2(0, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_47eim"]
+atlas = ExtResource("1_j27ug")
+region = Rect2(48, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yuomw"]
+atlas = ExtResource("1_j27ug")
+region = Rect2(96, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w8ahs"]
+atlas = ExtResource("1_j27ug")
+region = Rect2(144, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3y0ko"]
+atlas = ExtResource("1_j27ug")
+region = Rect2(192, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mjrkt"]
+atlas = ExtResource("1_j27ug")
+region = Rect2(240, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jtpv1"]
+atlas = ExtResource("1_j27ug")
+region = Rect2(288, 0, 48, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a7y2f"]
+atlas = ExtResource("1_j27ug")
+region = Rect2(336, 0, 48, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_71ib4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ctrdp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_47eim")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yuomw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w8ahs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3y0ko")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mjrkt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jtpv1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a7y2f")
+}],
+"loop": true,
+"name": &"wall_slide",
+"speed": 20.0
+}]
+
+[node name="slide" type="AnimatedSprite2D" unique_id=1816835392]
+texture_filter = 1
+rotation = 1.5707964
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_71ib4")
+animation = &"wall_slide"
+frame = 4
+frame_progress = 0.6463148
+offset = Vector2(-24, 1.1368684e-13)
+script = ExtResource("2_71ib4")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]

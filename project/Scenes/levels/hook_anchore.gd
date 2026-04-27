@@ -1,12 +1,13 @@
 extends Area2D
 
 @onready var icon: Sprite2D = $icon
+@onready var icon_2: Sprite2D = $icon/icon2
 
 func hook_enter(pos:Vector2):
 	var tween:=create_tween()
 	tween.parallel()
 	
-	icon.region_rect = Rect2(19,69,10,7)
+	icon_2.show()
 	remove_from_group("Anchor_point")
 	
 	tween.tween_property(icon,"scale",Vector2(0.9,1.1),0.08)\

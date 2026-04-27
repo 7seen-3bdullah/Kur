@@ -11,6 +11,10 @@ class_name player
 @onready var Hook_raycasts: Node2D = $raycast/hook_raycast
 @onready var hook_rope: Line2D = $Line2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var slidepart: GPUParticles2D = $slidepart
+@onready var slidepart_2: GPUParticles2D = $slidepart2
+@onready var run_marker_2d: Marker2D = $runMarker2D
+
 
 
 var nearest_wall:int=0
@@ -21,6 +25,7 @@ var updown:=0.0
 var can_hook:bool=false
 var is_hooking:bool=false
 var is_dead:bool=false
+var partrunplaying:bool = false
 var hook_raycast_dir:Vector2
 var hook_target_position:Vector2
 var last_input_dir: Vector2i = Vector2i.ZERO
@@ -68,6 +73,9 @@ func _process(delta: float) -> void:
 		return
 	
 	state_machine.process(delta)
+
+
+ 
 func _physics_process(delta: float) -> void:
 	if start_timer:
 		return
@@ -252,6 +260,7 @@ func wall_slide(delta: float):
 	
 	Icon.scale = Icon.scale.lerp(target_scale, 6 * delta)
 
+
 func run_squash(delta: float, max_speed: float):
 	var speed = abs(velocity.x)
 	
@@ -300,6 +309,25 @@ func run_squash(delta: float, max_speed: float):
 	
 	Icon.scale = Icon.scale.lerp(target_scale, 8 * delta)
 
+func slide_particals(start:bool):
+	if start == false:
+		slidepart.hide()
+		slidepart_2.hide()
+		return
+	if nearest_wall == 1:
+		slidepart.position.x = 5
+		slidepart_2.position.x = 5
+		slidepart.scale.x = -1
+		slidepart_2.scale.x = -1
+	else:
+		slidepart.position.x = -5
+		slidepart_2.position.x = -5
+		slidepart.scale.x = 1
+		slidepart_2.scale.x = 1
+	slidepart.show()
+	slidepart_2.show()
+
+
 func set_animation(Name:String=""):
 	if name == "":
 		push_error("non animation name selected!")
@@ -317,3 +345,13 @@ func die():
 
 func _reload_scene():
 	get_tree().reload_current_scene()
+
+
+func _on_icon_frame_changed() -> void:
+	if Icon.animation == "run":
+		if Icon.frame == 3 or Icon.frame == 7:
+			var eff = Preloads.RUNPARTICALS.instantiate()
+			eff.global_position = run_marker_2d.global_position
+			if Icon.flip_h:
+				eff.scale.x = -1
+			get_parent().add_child(eff)

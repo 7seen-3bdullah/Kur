@@ -50,7 +50,8 @@ width = 2.0
 default_color = Color(1, 0, 0, 1)
 
 [node name="player" parent="." unique_id=382306808 node_paths=PackedStringArray("line_2d") instance=ExtResource("2_q3318")]
-position = Vector2(693.968, 245.28812)
+z_index = 4
+position = Vector2(423.6925, 137.89868)
 line_2d = NodePath("../Line2D")
 
 [node name="RoomZoneArea2D" type="Area2D" parent="." unique_id=407569657]

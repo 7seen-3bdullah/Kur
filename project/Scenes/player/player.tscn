@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://bfbq6s6qq3j82" path="res://Scenes/player/fsm/wallslide.gd" id="8_6k3cy"]
 [ext_resource type="Script" uid="uid://c1pdt6dqtriwy" path="res://Scenes/player/fsm/walljump.gd" id="9_kd672"]
 [ext_resource type="Script" uid="uid://b2rymse8gv03r" path="res://Scenes/player/hook.gd" id="10_t3oqc"]
+[ext_resource type="Texture2D" uid="uid://dgivhi5tbmpef" path="res://Assets/2d_lights_and_shadows_neutral_point_light.webp" id="12_uawwb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t3oqc"]
 atlas = ExtResource("2_t3oqc")
@@ -276,6 +277,29 @@ animations = [{
 radius = 3.0
 height = 10.0
 
+[sub_resource type="Gradient" id="Gradient_p8lfk"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.34117648)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_uawwb"]
+gradient = SubResource("Gradient_p8lfk")
+
+[sub_resource type="Curve" id="Curve_p8lfk"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.3820225), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_uawwb"]
+curve = SubResource("Curve_p8lfk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ag54m"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+initial_velocity_max = 10.929999
+gravity = Vector3(0, -40, 0)
+scale_max = 2.5
+scale_curve = SubResource("CurveTexture_uawwb")
+color_ramp = SubResource("GradientTexture1D_uawwb")
+
 [node name="player" type="CharacterBody2D" unique_id=382306808 node_paths=PackedStringArray("Icon") groups=["player"]]
 collision_layer = 3
 collision_mask = 3
@@ -283,10 +307,13 @@ script = ExtResource("1_eo61r")
 Icon = NodePath("Icon")
 
 [node name="Icon" type="AnimatedSprite2D" parent="." unique_id=687690876]
+light_mask = 0
+z_index = 1
 texture_filter = 1
 position = Vector2(0, -3)
 sprite_frames = SubResource("SpriteFrames_ag54m")
-animation = &"idle"
+animation = &"run"
+frame_progress = 0.45527625
 offset = Vector2(0, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1277989690]
@@ -344,25 +371,13 @@ collision_mask = 2
 collide_with_areas = true
 
 [node name="hook2" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1651489570]
-rotation = -0.8387772
-target_position = Vector2(60, 60)
-collision_mask = 2
-collide_with_areas = true
-
-[node name="hook4" type="RayCast2D" parent="raycast/hook_raycast" unique_id=286213644]
-rotation = -0.8894376
-target_position = Vector2(60, 60)
-collision_mask = 2
-collide_with_areas = true
-
-[node name="hook5" type="RayCast2D" parent="raycast/hook_raycast" unique_id=402670060]
-rotation = -0.67735946
+rotation = -0.8609959
 target_position = Vector2(60, 60)
 collision_mask = 2
 collide_with_areas = true
 
 [node name="hook3" type="RayCast2D" parent="raycast/hook_raycast" unique_id=344291898]
-rotation = -0.7336813
+rotation = -0.7094674
 target_position = Vector2(60, 60)
 collision_mask = 2
 collide_with_areas = true
@@ -388,4 +403,29 @@ region_rect = Rect2(97, 107, 8, 5)
 process_mode = 3
 wait_time = 0.1
 
+[node name="slidepart" type="GPUParticles2D" parent="." unique_id=1781989234]
+visible = false
+position = Vector2(-4, 3)
+amount = 50
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_ag54m")
+
+[node name="slidepart2" type="GPUParticles2D" parent="." unique_id=683347630]
+visible = false
+position = Vector2(-5, -5)
+amount = 50
+lifetime = 0.7
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_ag54m")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=414489581]
+position = Vector2(2, -3)
+shadow_enabled = true
+texture = ExtResource("12_uawwb")
+texture_scale = 0.3
+
+[node name="runMarker2D" type="Marker2D" parent="." unique_id=1176407840]
+position = Vector2(-0.5, 3)
+
+[connection signal="frame_changed" from="Icon" to="." method="_on_icon_frame_changed"]
 [connection signal="timeout" from="Timer_die" to="." method="_on_timer_die_timeout"]

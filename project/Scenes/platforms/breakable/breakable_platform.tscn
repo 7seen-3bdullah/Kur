@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://d1c3e7nj7q7xf"]
 
 [ext_resource type="Script" uid="uid://c00jks64bsu3o" path="res://Scenes/platforms/breakable/breakable_platform.gd" id="1_vmdme"]
+[ext_resource type="Texture2D" uid="uid://b4hifasme5vkj" path="res://Assets/Tileset_Cave.png" id="2_cdvtc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cx1x1"]
 size = Vector2(16, 16)
@@ -46,9 +47,6 @@ shader_parameter/speed = 0.6000000285
 shader_parameter/X_shake = true
 shader_parameter/Y_shake = true
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cdvtc"]
-load_path = "res://.godot/imported/breakbleblok.png-4b912c1bc42d5ba8b093fe63b2379e01.ctex"
-
 [sub_resource type="Animation" id="Animation_3d5ep"]
 length = 0.001
 tracks/0/type = "value"
@@ -85,6 +83,9 @@ _data = {
 &"shake": SubResource("Animation_p70qw")
 }
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_cdvtc"]
+polygon = PackedVector2Array(-8, -8, -8, 8, 8, 8, 8, -8)
+
 [node name="BreakablePlatform" type="StaticBody2D" unique_id=754116624]
 script = ExtResource("1_vmdme")
 breakTime = 0.4
@@ -102,12 +103,15 @@ debug_color = Color(0.99699646, 0.05073563, 1.92523e-07, 0.41960785)
 [node name="Icon" type="Sprite2D" parent="." unique_id=914574280]
 texture_filter = 1
 material = SubResource("ShaderMaterial_3d5ep")
-texture = SubResource("CompressedTexture2D_cdvtc")
+texture = ExtResource("2_cdvtc")
 region_enabled = true
-region_rect = Rect2(0, 0, 16, 16)
+region_rect = Rect2(112, 48, 16, 16)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=230956722]
 libraries/ = SubResource("AnimationLibrary_x1gbm")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=1966017900]
+occluder = SubResource("OccluderPolygon2D_cdvtc")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://b1hjp0fs58ceh"]
+
+[ext_resource type="Script" uid="uid://dk8w76xg7i451" path="res://bones.gd" id="1_54of3"]
+[ext_resource type="Texture2D" uid="uid://dm7efloqsiyv1" path="res://Assets/ggd.png" id="2_j27aq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_eifk3"]
+size = Vector2(7, 4)
+
+[node name="bones" type="Area2D" unique_id=64910511]
+script = ExtResource("1_54of3")
+
+[node name="Ggd" type="Sprite2D" parent="." unique_id=1581288762]
+texture_filter = 1
+texture = ExtResource("2_j27aq")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1236815901]
+position = Vector2(-0.5, -1)
+shape = SubResource("RectangleShape2D_eifk3")
+
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

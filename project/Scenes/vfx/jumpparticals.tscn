@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://gdrd7vnls7p8"]
+
+[ext_resource type="Texture2D" uid="uid://chp3e3h4r5urn" path="res://Assets/Player/jump.png" id="1_patjq"]
+[ext_resource type="Script" uid="uid://cfbdje1m8ifun" path="res://Scenes/vfx/jumpparticals.gd" id="2_2taui"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2taui"]
+atlas = ExtResource("1_patjq")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anbp5"]
+atlas = ExtResource("1_patjq")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5x5ro"]
+atlas = ExtResource("1_patjq")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ioto"]
+atlas = ExtResource("1_patjq")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pb88d"]
+atlas = ExtResource("1_patjq")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_soqtk"]
+atlas = ExtResource("1_patjq")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ctrdp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2taui")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_anbp5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5x5ro")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ioto")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pb88d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_soqtk")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 20.0
+}]
+
+[node name="jumpparticals" type="AnimatedSprite2D" unique_id=566470423]
+texture_filter = 1
+scale = Vector2(0.35, 0.35)
+sprite_frames = SubResource("SpriteFrames_ctrdp")
+animation = &"jump"
+script = ExtResource("2_2taui")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
