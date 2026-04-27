@@ -19,8 +19,10 @@ func Enter():
 	
 	parent.set_animation("hook")
 	parent.state_tween("hook")
+	parent.wave_hook.play("wave")
 	await get_tree().create_timer(0.08).timeout
 	launch = true
+	parent.ghost_timer(true)
 
 @warning_ignore("unused_parameter")
 func process_physics(delta:float):
@@ -63,3 +65,4 @@ func Exit():
 	print("states: hook exit")
 	
 	parent.is_hooking = false
+	parent.ghost_timer(false)

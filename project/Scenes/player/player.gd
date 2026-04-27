@@ -14,6 +14,8 @@ class_name player
 @onready var slidepart: GPUParticles2D = $slidepart
 @onready var slidepart_2: GPUParticles2D = $slidepart2
 @onready var run_marker_2d: Marker2D = $runMarker2D
+@onready var dashghost: Timer = $dashghost
+@onready var wave_hook: AnimationPlayer = $wave_hook
 
 
 
@@ -40,7 +42,7 @@ var start_timer:=true
 var hook_body
 var tween:Tween
 var tween_data:Dictionary={
-	"before_touch_grownd":[Vector2(1.15,0.85),0.07,Tween.EASE_OUT,Tween.TRANS_CUBIC],
+	"before_touch_grownd":[Vector2(1.15,0.85),0.1,Tween.EASE_OUT,Tween.TRANS_CUBIC],
 	"after_touch_grownd":[Vector2(1,1),0.14,Tween.EASE_OUT,Tween.TRANS_BACK],
 	"before_jump":[Vector2(1.12,0.88),0.06,Tween.EASE_OUT,Tween.TRANS_CUBIC],
 	"after_jump":[Vector2(0.88,1.12),0.10,Tween.EASE_OUT,Tween.TRANS_BACK],
@@ -355,3 +357,21 @@ func _on_icon_frame_changed() -> void:
 			if Icon.flip_h:
 				eff.scale.x = -1
 			get_parent().add_child(eff)
+
+func ghost_timer(start:bool):
+	if start:
+		dashghost.start()
+		add_ghost()
+	else:
+		dashghost.stop()
+
+func _on_dashghost_timeout() -> void:
+	add_ghost()
+
+func add_ghost():
+	var ghost = Preloads.GHOST.instantiate()
+	ghost.scale = Icon.scale
+	ghost.flip_h = Icon.flip_h
+	ghost.global_position = Icon.global_position
+	get_parent().add_child(ghost)
+	print("add ghost effect")

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://c052ll7ci4bo6"]
+
+[ext_resource type="Texture2D" uid="uid://bivq1q3cuenqc" path="res://Assets/Player/Archaeologist_Sprite_Sheet-Recovered.png" id="1_qhdvn"]
+[ext_resource type="Script" uid="uid://85y45x1qxc65" path="res://Scenes/player/ghosht.gd" id="2_oca6h"]
+
+[node name="ghosht" type="Sprite2D" unique_id=2129361873]
+texture_filter = 1
+texture = ExtResource("1_qhdvn")
+region_enabled = true
+region_rect = Rect2(409, 73, 14, 20)
+script = ExtResource("2_oca6h")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1531076693]
+modulate = Color(1, 1, 1, 0.5372549)
+texture_filter = 1
+position = Vector2(0, 10)
+texture = ExtResource("1_qhdvn")
+region_enabled = true
+region_rect = Rect2(406, 96, 22, 15)

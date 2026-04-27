@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://iq4msh1i02qm" path="res://Assets/tmghal/f2c442d3-3389-4beb-9a23-a516da5146b0 (1).png" id="20_3m7r5"]
 [ext_resource type="PackedScene" uid="uid://dabx0ofu7dffy" path="res://Scenes/levels/world_environment.tscn" id="25_8mr20"]
 [ext_resource type="Shader" uid="uid://b52dme2qvxuvq" path="res://Scenes/levels/fog.gdshader" id="26_1ega6"]
+[ext_resource type="PackedScene" uid="uid://dcwhtqy4cijxc" path="res://Scenes/platforms/save_point.tscn" id="27_c46r4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rsv82"]
 texture = ExtResource("1_q2mrg")
@@ -2578,3 +2579,20 @@ offset_top = -407.0
 offset_right = 383.0
 offset_bottom = 211.0
 color = Color(0.6972954, 0.66606057, 0.61920834, 1)
+
+[node name="save_points" type="Node2D" parent="." unique_id=1993358774]
+
+[node name="save_point3" parent="save_points" unique_id=898332884 instance=ExtResource("27_c46r4")]
+position = Vector2(256, -164)
+rotation = -1.5707964
+
+[node name="save_point4" parent="save_points" unique_id=680008713 instance=ExtResource("27_c46r4")]
+position = Vector2(-56, -313)
+
+[node name="save_point5" parent="save_points" unique_id=1307436621 instance=ExtResource("27_c46r4")]
+position = Vector2(-418, 43)
+rotation = -1.5707964
+
+[node name="save_point6" parent="save_points" unique_id=382877416 instance=ExtResource("27_c46r4")]
+position = Vector2(-412, -36)
+rotation = -1.5707964

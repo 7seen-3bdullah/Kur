@@ -3,11 +3,59 @@
 [ext_resource type="Texture2D" uid="uid://b4hifasme5vkj" path="res://Assets/Tileset_Cave.png" id="1_0h8cn"]
 [ext_resource type="Script" uid="uid://capkahougupxx" path="res://Scenes/platforms/bounce/jumppad.gd" id="1_iandc"]
 
+[sub_resource type="Gradient" id="Gradient_iandc"]
+offsets = PackedFloat32Array(0, 0.6134454, 1)
+colors = PackedColorArray(1, 1, 1, 0.69803923, 1, 1, 1, 1, 1, 1, 1, 0.20392157)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4anw5"]
+gradient = SubResource("Gradient_iandc")
+
+[sub_resource type="Curve" id="Curve_sysfc"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.22471917), -2.3375683, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_vcwyc"]
+curve = SubResource("Curve_sysfc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mfqej"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 1.0
+initial_velocity_max = 10.0
+gravity = Vector3(20, 0, 0)
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_vcwyc")
+color_ramp = SubResource("GradientTexture1D_4anw5")
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_4anw5"]
 radius = 6.0
 
 [node name="jumppad" type="Area2D" unique_id=213962377]
 script = ExtResource("1_iandc")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1772807527]
+position = Vector2(7.000002, -1)
+rotation = -0.5235988
+scale = Vector2(0.99999994, 0.99999994)
+emitting = false
+amount = 50
+one_shot = true
+speed_scale = 4.0
+explosiveness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_mfqej")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="." unique_id=1230397294]
+position = Vector2(-7, -1)
+rotation = -2.6179938
+scale = Vector2(0.99999994, 0.99999994)
+emitting = false
+amount = 50
+one_shot = true
+speed_scale = 4.0
+explosiveness = 1.0
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_mfqej")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1005953162]
 texture_filter = 1

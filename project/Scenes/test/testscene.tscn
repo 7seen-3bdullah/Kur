@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bxtpa77eem375"]
 
+[ext_resource type="Script" uid="uid://cyipb1gqh70gh" path="res://Scenes/test/testscene.gd" id="1_p4bn8"]
 [ext_resource type="PackedScene" uid="uid://cwd4x12dychyb" path="res://Scenes/player/player.tscn" id="2_q3318"]
 [ext_resource type="Script" uid="uid://pv8stmxcyttx" path="res://Scripts/RoomZoneArea2d.gd" id="3_w8pm8"]
 [ext_resource type="PackedScene" uid="uid://ceaj80ikr7ndu" path="res://Scenes/camera/room_zone_camera_2d.tscn" id="4_o85rw"]
@@ -43,6 +44,7 @@ size = Vector2(207, 20)
 size = Vector2(23.923435, 3)
 
 [node name="testscene" type="Node2D" unique_id=2099453901]
+script = ExtResource("1_p4bn8")
 
 [node name="Line2D" type="Line2D" parent="." unique_id=803850865]
 visible = false
@@ -51,7 +53,7 @@ default_color = Color(1, 0, 0, 1)
 
 [node name="player" parent="." unique_id=382306808 node_paths=PackedStringArray("line_2d") instance=ExtResource("2_q3318")]
 z_index = 4
-position = Vector2(423.6925, 137.89868)
+position = Vector2(734.9342, 256.35394)
 line_2d = NodePath("../Line2D")
 
 [node name="RoomZoneArea2D" type="Area2D" parent="." unique_id=407569657]
