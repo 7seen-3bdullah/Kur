@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://xu4qxti2c7av"]
+
+[ext_resource type="Script" uid="uid://c4qgxocqh8c8j" path="res://sound manager/sound_manager.gd" id="1_qhs6n"]
+
+[node name="SoundManager" type="Node" unique_id=221587243 node_paths=PackedStringArray("Environment1", "Environment2")]
+process_mode = 3
+script = ExtResource("1_qhs6n")
+Environment1 = NodePath("environment1")
+Environment2 = NodePath("environment2")
+
+[node name="environment1" type="AudioStreamPlayer" parent="." unique_id=1758185056]
+autoplay = true
+
+[node name="environment2" type="AudioStreamPlayer" parent="." unique_id=1092514479]

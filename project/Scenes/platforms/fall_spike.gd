@@ -26,6 +26,7 @@ func _physics_process(delta: float) -> void:
 			animation.play("break")
 			if Global.camera != null:
 				Global.camera.apply_shake(1,2)
+				SoundManager.SFX(Preloads.sounds["breaking"],-5,randf_range(0.9,1.1))
 	
 	
 	if body_enter and !stop_fall:

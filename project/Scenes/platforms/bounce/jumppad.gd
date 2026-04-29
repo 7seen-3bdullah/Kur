@@ -18,6 +18,7 @@ func _on_body_entered(body: Node2D) -> void:
 		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BACK)
 		tween.tween_property(sprite_2d,"scale",Vector2(1,1),0.1)\
 		.set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+		SoundManager.SFX(Preloads.sounds["jumppad"],-5,randf_range(0.9,1.2))
 		
 		body.velocity.y = -jumpVelocity
 		body.state_tween("before_jump","after_jump")

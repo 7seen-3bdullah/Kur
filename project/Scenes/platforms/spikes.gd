@@ -22,5 +22,10 @@ func _on_body_exited(body: Node2D) -> void:
 
 
 func _on_timer_timeout() -> void:
+	SoundManager.SFX(Preloads.sounds["spike"],-15,randf_range(0.9,1.1))
 	if player_coll:
 		Global.Player.die()
+
+
+func _on_animation_player_animation_finished(anim_name: StringName) -> void:
+	pass

@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://b2rymse8gv03r" path="res://Scenes/player/hook.gd" id="10_t3oqc"]
 [ext_resource type="Texture2D" uid="uid://dgivhi5tbmpef" path="res://Assets/2d_lights_and_shadows_neutral_point_light.webp" id="12_uawwb"]
 [ext_resource type="Shader" uid="uid://c7qrvlshjie18" path="res://Scenes/player/wavehook.gdshader" id="14_g7b1g"]
+[ext_resource type="AudioStream" uid="uid://dlcc8foygdbu4" path="res://sounds/slide.ogg" id="15_h0khc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t3oqc"]
 atlas = ExtResource("2_t3oqc")
@@ -319,7 +320,6 @@ color_ramp = SubResource("GradientTexture1D_uawwb")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h0khc"]
 shader = ExtResource("14_g7b1g")
 shader_parameter/strength = 0.08
-shader_parameter/center = Vector2(0.585, 0.45)
 shader_parameter/radius = 0.0
 shader_parameter/aberration = 0.425
 shader_parameter/width = 0.009999999747
@@ -373,9 +373,7 @@ z_index = 1
 texture_filter = 1
 position = Vector2(0, -3)
 sprite_frames = SubResource("SpriteFrames_ag54m")
-animation = &"hook"
-frame = 3
-frame_progress = 1.0
+animation = &"run"
 offset = Vector2(0, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1277989690]
@@ -500,10 +498,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -142.0
-offset_top = -87.0
-offset_right = 142.0
-offset_bottom = 88.0
+offset_left = -141.0
+offset_top = -92.0
+offset_right = 143.0
+offset_bottom = 83.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(3, 3)
@@ -513,6 +511,10 @@ size_flags_horizontal = 4
 [node name="wave_hook" type="AnimationPlayer" parent="." unique_id=1364351828]
 libraries/ = SubResource("AnimationLibrary_nyrd7")
 autoplay = &"RESET"
+
+[node name="slide_audio" type="AudioStreamPlayer" parent="." unique_id=981413778]
+stream = ExtResource("15_h0khc")
+volume_db = -10.0
 
 [connection signal="frame_changed" from="Icon" to="." method="_on_icon_frame_changed"]
 [connection signal="timeout" from="Timer_die" to="." method="_on_timer_die_timeout"]

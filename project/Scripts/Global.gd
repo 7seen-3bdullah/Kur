@@ -4,6 +4,7 @@ var GlobalState:=State.new()
 var Player
 var camera=null
 var last_save_poin:Vector2=Vector2.ZERO
+var level:int=1
 
 enum InputDevice {
 	KEYBOARD,

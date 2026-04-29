@@ -13,6 +13,7 @@ func _ready() -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		animation_player.play("shake")
+		SoundManager.SFX(Preloads.sounds["shake2"],-10,randf_range(0.9,1.1))
 		player_enter = true
 		
 		if untile_player_out:

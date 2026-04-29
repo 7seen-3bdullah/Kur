@@ -16,6 +16,7 @@ class_name player
 @onready var run_marker_2d: Marker2D = $runMarker2D
 @onready var dashghost: Timer = $dashghost
 @onready var wave_hook: AnimationPlayer = $wave_hook
+@onready var slide_audio: AudioStreamPlayer = $slide_audio
 
 
 
@@ -315,6 +316,7 @@ func slide_particals(start:bool):
 	if start == false:
 		slidepart.hide()
 		slidepart_2.hide()
+		slide_audio.stop()
 		return
 	if nearest_wall == 1:
 		slidepart.position.x = 5
@@ -328,6 +330,9 @@ func slide_particals(start:bool):
 		slidepart_2.scale.x = 1
 	slidepart.show()
 	slidepart_2.show()
+	
+	if !slide_audio.playing:
+		slide_audio.play()
 
 
 func set_animation(Name:String=""):
@@ -351,12 +356,13 @@ func _reload_scene():
 
 func _on_icon_frame_changed() -> void:
 	if Icon.animation == "run":
-		if Icon.frame == 3 or Icon.frame == 7:
+		if Icon.frame == 1 or Icon.frame == 5:
 			var eff = Preloads.RUNPARTICALS.instantiate()
 			eff.global_position = run_marker_2d.global_position
 			if Icon.flip_h:
 				eff.scale.x = -1
 			get_parent().add_child(eff)
+			SoundManager.SFX(Preloads.get_random_audio("footsetp"),-20,1.2)
 
 func ghost_timer(start:bool):
 	if start:

@@ -5,7 +5,7 @@
 
 [sub_resource type="Gradient" id="Gradient_iandc"]
 offsets = PackedFloat32Array(0, 0.6134454, 1)
-colors = PackedColorArray(1, 1, 1, 0.69803923, 1, 1, 1, 1, 1, 1, 1, 0.20392157)
+colors = PackedColorArray(0.960356, 0.6699406, 0.46754643, 0.69803923, 0.9866621, 0.8064371, 0.5322639, 1, 1, 1, 1, 0.20392157)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_4anw5"]
 gradient = SubResource("Gradient_iandc")
@@ -39,6 +39,7 @@ rotation = -0.5235988
 scale = Vector2(0.99999994, 0.99999994)
 emitting = false
 amount = 50
+lifetime = 0.7
 one_shot = true
 speed_scale = 4.0
 explosiveness = 1.0
@@ -51,6 +52,7 @@ rotation = -2.6179938
 scale = Vector2(0.99999994, 0.99999994)
 emitting = false
 amount = 50
+lifetime = 0.7
 one_shot = true
 speed_scale = 4.0
 explosiveness = 1.0

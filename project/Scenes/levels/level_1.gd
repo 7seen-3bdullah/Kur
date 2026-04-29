@@ -6,7 +6,7 @@ extends Node2D
 var use_hook = false
 
 func _ready() -> void:
-	if Global.last_save_poin != Vector2.ZERO:
+	if Global.last_save_poin != Vector2.ZERO and Global.level == 0:
 		Global.Player.global_position = Global.last_save_poin
 
 func _process(delta: float) -> void:
@@ -31,6 +31,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		.set_ease(Tween.EASE_IN)
 		await tween.finished
 		Global.camera_shake(6,3)
+		SoundManager.SFX(Preloads.sounds["impact"],0,0.3)
 
 
 func _on_staticfallareakill_body_entered(body: Node2D) -> void:

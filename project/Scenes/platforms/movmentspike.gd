@@ -4,6 +4,7 @@ extends Area2D
 @export var distance := 32
 @export_enum("left","right","up","down") var dir := "left"
 @export var breakable:bool=false
+@export var camera_shake:bool=false
 
 var start_move:=false
 
@@ -25,6 +26,10 @@ func move():
 		
 		var tween := create_tween()
 		tween.tween_property(self,"global_position",move_to,time)
+		await tween.finished
+		if camera_shake:
+			Global.camera_shake(6,6)
+			SoundManager.SFX(Preloads.sounds["impact"],0,0.5)
 
 
 func _on_body_entered(body: Node2D) -> void:

@@ -14,6 +14,7 @@ func _process(delta: float) -> void:
 			start_time=false
 			
 			$Sprite2D/AnimationPlayer.play("break")
+			SoundManager.SFX(Preloads.sounds["breakingvis"],-20,randf_range(0.9,1.1))
 
 func _break():
 	Global.frame_freeze(0.0,0.07)

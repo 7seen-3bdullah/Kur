@@ -17,6 +17,7 @@ func _on_body_entered(body: Node2D) -> void:
 		
 		await get_tree().create_timer(delay).timeout
 		spik.region_rect = rect1
+		SoundManager.SFX(Preloads.sounds["spike"],-15,randf_range(0.9,1.1))
 		var tween := create_tween()
 		tween.tween_property(spik,"scale",Vector2(1.1,0.9),0.08)\
 		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)
@@ -34,6 +35,7 @@ func _on_body_exited(body: Node2D) -> void:
 		
 		await get_tree().create_timer(0.5).timeout
 		spik.region_rect = rect2
+		SoundManager.SFX(Preloads.sounds["spike"],-15,randf_range(1.3,1.5))
 		var tween := create_tween()
 		tween.tween_property(spik,"scale",Vector2(0.9,1.1),0.08)\
 		.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_QUAD)

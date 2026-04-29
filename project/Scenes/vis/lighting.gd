@@ -32,3 +32,5 @@ func _on_body_entered(body: Node2D) -> void:
 		start = true
 		var dir = sign(-body.velocity.x)
 		angular_velocity += dir * 2.0
+		await (get_tree().create_timer(0.4).timeout)
+		#SoundManager.SFX2D(Preloads.sounds["rope2"],global_position,-10,randf_range(0.9,1.2))

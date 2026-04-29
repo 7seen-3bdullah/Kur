@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://w2prtpa6qf4r"]
 
+[ext_resource type="Script" uid="uid://chjt6ow4ftdii" path="res://Scenes/levels/level_2.gd" id="1_eugjt"]
 [ext_resource type="Texture2D" uid="uid://b4hifasme5vkj" path="res://Assets/Tileset_Cave.png" id="1_q2mrg"]
 [ext_resource type="Script" uid="uid://bl06u0vci6i5e" path="res://Scenes/levels/spike_tilemap.gd" id="2_mb2fk"]
 [ext_resource type="Texture2D" uid="uid://3n80741sbcpy" path="res://Assets/Enviroment.png" id="3_peptx"]
@@ -8,7 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://bc6bof74x657f" path="res://Scenes/platforms/bounce/jumppad.tscn" id="5_8j7el"]
 [ext_resource type="PackedScene" uid="uid://cwcyo26h4vbyc" path="res://Scenes/platforms/movmentspike.tscn" id="6_8j7el"]
 [ext_resource type="PackedScene" uid="uid://d1c3e7nj7q7xf" path="res://Scenes/platforms/breakable/breakable_platform.tscn" id="7_dspjw"]
-[ext_resource type="PackedScene" uid="uid://b3oaem4ebmdtm" path="res://Scenes/platforms/wall_spike.tscn" id="8_fh68y"]
 [ext_resource type="PackedScene" uid="uid://bshdksf2pc850" path="res://Scenes/platforms/fall_spike.tscn" id="9_ym5bi"]
 [ext_resource type="PackedScene" uid="uid://dt0hwg7fq6msm" path="res://Scenes/platforms/spikes.tscn" id="10_yuh2w"]
 [ext_resource type="Texture2D" uid="uid://c1gnnrilomnxa" path="res://Assets/bg.png" id="11_fkc1a"]
@@ -1968,7 +1968,20 @@ size = Vector2(386.94098, 248)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5i3kd"]
 size = Vector2(386.94098, 188)
 
-[sub_resource type="Environment" id="Environment_1ega6"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_c46r4"]
+noise_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r8eks"]
+noise = SubResource("FastNoiseLite_c46r4")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eugjt"]
+shader = ExtResource("26_1ega6")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_r8eks")
+shader_parameter/density = 0.25
+shader_parameter/speed = Vector2(0.02, 0.01)
+
+[sub_resource type="Environment" id="Environment_c46r4"]
 background_mode = 3
 background_color = Color(0.043137256, 0.05882353, 0.078431375, 1)
 ambient_light_source = 2
@@ -1987,26 +2000,14 @@ adjustment_brightness = 0.6
 adjustment_contrast = 1.1
 adjustment_saturation = 0.8
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_c46r4"]
-noise_type = 0
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r8eks"]
-noise = SubResource("FastNoiseLite_c46r4")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_eugjt"]
-shader = ExtResource("26_1ega6")
-shader_parameter/noise_texture = SubResource("NoiseTexture2D_r8eks")
-shader_parameter/density = 0.25
-shader_parameter/speed = Vector2(0.02, 0.01)
-
 [node name="level2" type="Node2D" unique_id=292340121]
+script = ExtResource("1_eugjt")
 
 [node name="map" type="Node2D" parent="." unique_id=1212953361]
 
 [node name="spike_tilemaps" type="TileMapLayer" parent="map" unique_id=1259349774]
 texture_filter = 1
-tile_map_data = PackedByteArray("AAAHAAcAAgAAAAMAAFACAAMAAgAAAAMAAFACAAQAAgAAAAMAAFD//wwAAgAAAAMAAAAAAAwAAgAAAAMAAAABAAwAAgAAAAMAAAACAAwAAgAAAAMAAAADAAwAAgAAAAMAAAAEAAwAAgAAAAMAAAAFAAwAAgAAAAMAAAAGAAwAAgAAAAMAAAAHAAwAAgAAAAMAAAAIAAwAAgAAAAMAAAASAAwAAgAAAAMAAAATAAwAAgAAAAMAAAARAAwAAgAAAAMAAAAQAAwAAgAAAAMAAAAPAAwAAgAAAAMAAAAOAAwAAgAAAAMAAAANAAwAAgAAAAMAAAAMAAwAAgAAAAMAAAALAAwAAgAAAAMAAAAKAAwAAgAAAAMAAAAJAAwAAgAAAAMAAAAKAAUAAgAAAAMAACALAAUAAgAAAAMAACAMAAQAAgAAAAMAAHAMAAMAAgAAAAMAAHALAAIAAgAAAAMAABAKAAIAAgAAAAMAABAJAAMAAgAAAAMAAEAJAAQAAgAAAAMAAEAGAAUAAgAAAAMAAAAHAAYAAgAAAAMAAFAHAAgAAgAAAAMAAFAHAPf/AgAAAAMAAAAGAPf/AgAAAAMAAAAFAPf/AgAAAAMAAAAEAPf/AgAAAAMAAAADAPf/AgAAAAMAAAACAPf/AgAAAAMAAAABAPf/AgAAAAMAAAD6//n/AgAAAAMAAAD5//n/AgAAAAMAAAD4//n/AgAAAAMAAADn/wUAAgAAAAMAAADo/wUAAgAAAAMAAADp/wUAAgAAAAMAAADq/wUAAgAAAAMAAADr/wUAAgAAAAMAAADs/wUAAgAAAAMAAADt/wUAAgAAAAMAAADu/wUAAgAAAAMAAADv/wUAAgAAAAMAAADw/wUAAgAAAAMAAADx/wUAAgAAAAMAAADy/wUAAgAAAAMAAADz/wUAAgAAAAMAAAD0/wUAAgAAAAMAAAD1/wUAAgAAAAMAAAD2/wUAAgAAAAMAAAD3/wUAAgAAAAMAAAD4/wUAAgAAAAMAAAD3//X/AgAAAAMAAAD2//X/AgAAAAMAAAD4//b/AgAAAAMAAFD4//f/AgAAAAMAAFD4//j/AgAAAAMAAFDs//T/AgAAAAMAAFDs//X/AgAAAAMAAFDs//b/AgAAAAMAAFDu//f/AgAAAAMAAADt//f/AgAAAAMAAADr/wIAAgAAAAMAAADs/wIAAgAAAAMAAADt/wIAAgAAAAMAAADu/wEAAgAAAAMAAADv/wEAAgAAAAMAAADw/wIAAgAAAAMAAFDw/wMAAgAAAAMAAFDw/wQAAgAAAAMAAFD3//L/AgAAAAMAADD2//L/AgAAAAMAADD4/+7/AgAAAAMAAFD4/+//AgAAAAMAAFD4//D/AgAAAAMAAFD4//H/AgAAAAMAAFDl/+v/AgAAAAMAAFDl/+z/AgAAAAMAAFDn//H/AgAAAAMAAGDn//L/AgAAAAMAAGDl//f/AgAAAAMAAFDl//j/AgAAAAMAAFA=")
+tile_map_data = PackedByteArray("AAAHAAcAAgAAAAMAAFACAAMAAgAAAAMAAFACAAQAAgAAAAMAAFD//wwAAgAAAAMAAAAAAAwAAgAAAAMAAAABAAwAAgAAAAMAAAACAAwAAgAAAAMAAAADAAwAAgAAAAMAAAAEAAwAAgAAAAMAAAAFAAwAAgAAAAMAAAAGAAwAAgAAAAMAAAAHAAwAAgAAAAMAAAAIAAwAAgAAAAMAAAASAAwAAgAAAAMAAAATAAwAAgAAAAMAAAARAAwAAgAAAAMAAAAQAAwAAgAAAAMAAAAPAAwAAgAAAAMAAAAOAAwAAgAAAAMAAAANAAwAAgAAAAMAAAAMAAwAAgAAAAMAAAALAAwAAgAAAAMAAAAKAAwAAgAAAAMAAAAJAAwAAgAAAAMAAAAKAAUAAgAAAAMAACALAAUAAgAAAAMAACAMAAQAAgAAAAMAAHAMAAMAAgAAAAMAAHALAAIAAgAAAAMAABAKAAIAAgAAAAMAABAJAAMAAgAAAAMAAEAJAAQAAgAAAAMAAEAHAAYAAgAAAAMAAFAHAAgAAgAAAAMAAFAHAPf/AgAAAAMAAAAGAPf/AgAAAAMAAAAFAPf/AgAAAAMAAAAEAPf/AgAAAAMAAAADAPf/AgAAAAMAAAACAPf/AgAAAAMAAAABAPf/AgAAAAMAAAD6//n/AgAAAAMAAAD5//n/AgAAAAMAAAD4//n/AgAAAAMAAADn/wUAAgAAAAMAAADo/wUAAgAAAAMAAADp/wUAAgAAAAMAAADq/wUAAgAAAAMAAADr/wUAAgAAAAMAAADs/wUAAgAAAAMAAADt/wUAAgAAAAMAAADu/wUAAgAAAAMAAADv/wUAAgAAAAMAAADw/wUAAgAAAAMAAADx/wUAAgAAAAMAAADy/wUAAgAAAAMAAADz/wUAAgAAAAMAAAD0/wUAAgAAAAMAAAD1/wUAAgAAAAMAAAD2/wUAAgAAAAMAAAD3/wUAAgAAAAMAAAD4/wUAAgAAAAMAAAD3//X/AgAAAAMAAAD2//X/AgAAAAMAAAD4//b/AgAAAAMAAFD4//f/AgAAAAMAAFD4//j/AgAAAAMAAFDs//T/AgAAAAMAAFDs//X/AgAAAAMAAFDs//b/AgAAAAMAAFDu//f/AgAAAAMAAADt//f/AgAAAAMAAADr/wIAAgAAAAMAAADs/wIAAgAAAAMAAADt/wIAAgAAAAMAAADu/wEAAgAAAAMAAADv/wEAAgAAAAMAAADw/wIAAgAAAAMAAFDw/wMAAgAAAAMAAFDw/wQAAgAAAAMAAFD3//L/AgAAAAMAADD2//L/AgAAAAMAADD4/+7/AgAAAAMAAFD4/+//AgAAAAMAAFD4//D/AgAAAAMAAFD4//H/AgAAAAMAAFDl/+v/AgAAAAMAAFDl/+z/AgAAAAMAAFDn//H/AgAAAAMAAGDn//L/AgAAAAMAAGDl//f/AgAAAAMAAFDl//j/AgAAAAMAAFA=")
 tile_set = SubResource("TileSet_8j7el")
 script = ExtResource("2_mb2fk")
 metadata/_custom_type_script = "uid://bl06u0vci6i5e"
@@ -2059,6 +2060,7 @@ position = Vector2(88, -264)
 
 [node name="jumppad" parent="map/jumppad" unique_id=213962377 instance=ExtResource("5_8j7el")]
 position = Vector2(280, 48)
+jumpVelocity = 315.0
 
 [node name="jumppad3" parent="map/jumppad" unique_id=1283232651 instance=ExtResource("5_8j7el")]
 position = Vector2(-167, -144)
@@ -2070,21 +2072,28 @@ position = Vector2(248, -16)
 
 [node name="movmentspike4" parent="map/spiks" unique_id=158435894 instance=ExtResource("6_8j7el")]
 position = Vector2(296, -136)
+time = 0.4
+camera_shake = true
 
 [node name="movmentspike5" parent="map/spiks" unique_id=460928500 instance=ExtResource("6_8j7el")]
 position = Vector2(296, -120)
+time = 0.3
+camera_shake = true
 
 [node name="movmentspike6" parent="map/spiks" unique_id=1754848359 instance=ExtResource("6_8j7el")]
 position = Vector2(296, -104)
+camera_shake = true
 
 [node name="movmentspike8" parent="map/spiks" unique_id=1140113249 instance=ExtResource("6_8j7el")]
 position = Vector2(200, -136)
 rotation = 3.1415927
+time = 0.4
 dir = "right"
 
 [node name="movmentspike9" parent="map/spiks" unique_id=1116431929 instance=ExtResource("6_8j7el")]
 position = Vector2(200, -120)
 rotation = 3.1415927
+time = 0.3
 dir = "right"
 
 [node name="movmentspike10" parent="map/spiks" unique_id=576081591 instance=ExtResource("6_8j7el")]
@@ -2097,6 +2106,7 @@ position = Vector2(-216, -280)
 rotation = 3.1415927
 distance = 48
 dir = "right"
+camera_shake = true
 
 [node name="movmentspike12" parent="map/spiks" unique_id=1765334924 instance=ExtResource("6_8j7el")]
 position = Vector2(96, -152)
@@ -2104,20 +2114,23 @@ rotation = 1.5707964
 time = 0.3
 distance = 48
 dir = "up"
+camera_shake = true
 
 [node name="movmentspike13" parent="map/spiks" unique_id=1622787077 instance=ExtResource("6_8j7el")]
 position = Vector2(80, -152)
 rotation = 1.5707964
-time = 0.3
+time = 0.4
 distance = 48
 dir = "up"
+camera_shake = true
 
 [node name="movmentspike14" parent="map/spiks" unique_id=207127362 instance=ExtResource("6_8j7el")]
 position = Vector2(64, -152)
 rotation = 1.5707964
-time = 0.3
+time = 0.5
 distance = 48
 dir = "up"
+camera_shake = true
 
 [node name="BreakablePlatform" parent="map" unique_id=754116624 instance=ExtResource("7_dspjw")]
 position = Vector2(8, -280)
@@ -2127,20 +2140,6 @@ position = Vector2(24, -280)
 
 [node name="BreakablePlatform3" parent="map" unique_id=182360317 instance=ExtResource("7_dspjw")]
 position = Vector2(40, -280)
-
-[node name="wall_spike" parent="map" unique_id=1267106266 instance=ExtResource("8_fh68y")]
-position = Vector2(232, 88)
-delay = 0.1
-
-[node name="wall_spike3" parent="map" unique_id=1371281219 instance=ExtResource("8_fh68y")]
-position = Vector2(168, 142)
-delay = 0.1
-
-[node name="wall_spike4" parent="map" unique_id=1339350177 instance=ExtResource("8_fh68y")]
-position = Vector2(32, -224)
-
-[node name="wall_spike6" parent="map" unique_id=1909856065 instance=ExtResource("8_fh68y")]
-position = Vector2(64, -256)
 
 [node name="fall_spike" parent="map" unique_id=451278677 instance=ExtResource("9_ym5bi")]
 position = Vector2(312, -224)
@@ -2327,9 +2326,9 @@ position = Vector2(-304, -328)
 position = Vector2(-360, -328)
 
 [node name="ImageRemovebgPreview(1)" type="Sprite2D" parent="map" unique_id=1997249061]
-z_index = 3
+z_index = -1
 texture_filter = 1
-position = Vector2(230, 152)
+position = Vector2(288, 168)
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("13_ynqhv")
 
@@ -2564,12 +2563,9 @@ shape = SubResource("RectangleShape2D_5i3kd")
 debug_color = Color(1, 0.25666898, 0.9248691, 0.41960785)
 
 [node name="player" parent="." unique_id=382306808 instance=ExtResource("4_mb2fk")]
-position = Vector2(-408, -65)
+position = Vector2(9.404297, 120.352936)
 
 [node name="RoomZoneCamera2D" parent="." unique_id=1172675343 instance=ExtResource("14_35bfj")]
-
-[node name="WorldEnvironment" parent="." unique_id=1231198512 instance=ExtResource("25_8mr20")]
-environment = SubResource("Environment_1ega6")
 
 [node name="fog" type="ColorRect" parent="." unique_id=578575648]
 z_index = -1
@@ -2596,3 +2592,6 @@ rotation = -1.5707964
 [node name="save_point6" parent="save_points" unique_id=382877416 instance=ExtResource("27_c46r4")]
 position = Vector2(-412, -36)
 rotation = -1.5707964
+
+[node name="WorldEnvironment" parent="." unique_id=1231198512 instance=ExtResource("25_8mr20")]
+environment = SubResource("Environment_c46r4")

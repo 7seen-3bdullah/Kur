@@ -87,6 +87,7 @@ func process_physics(delta:float):
 		jump = true
 		parent.slide_particals(false)
 		parent.state_tween("before_jump","after_jump")
+		SoundManager.SFX(Preloads.sounds["jump"],0,randf_range(0.9,1.1))
 	
 	
 	if grav_timer > 0:
@@ -115,6 +116,7 @@ func _transition():
 		state_transition.emit(self,"idle")
 		
 		parent.state_tween("before_touch_grownd","after_touch_grownd")
+		SoundManager.SFX(Preloads.sounds["landing"],-15,1.5)
 	else:
 		if parent.nearest_wall ==0 and parent.velocity.y > 0 and !is_transitioning:
 			is_transitioning=true

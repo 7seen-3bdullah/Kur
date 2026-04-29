@@ -88,7 +88,9 @@ shape = SubResource("RectangleShape2D_7feyd")
 
 [node name="Timer" type="Timer" parent="." unique_id=1128125103]
 wait_time = 0.3
+one_shot = true
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

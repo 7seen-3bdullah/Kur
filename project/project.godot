@@ -16,10 +16,15 @@ config/features=PackedStringArray("4.6")
 run/max_fps=60
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://dwdi8iupkr8v8"
+
 [autoload]
 
 Preloads="*uid://wkll77nyjd4x"
 Global="*uid://bkem1rtmrjisk"
+SoundManager="*uid://xu4qxti2c7av"
 
 [display]
 

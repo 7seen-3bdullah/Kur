@@ -23,6 +23,7 @@ func Enter():
 	await get_tree().create_timer(0.08).timeout
 	launch = true
 	parent.ghost_timer(true)
+	SoundManager.SFX(Preloads.sounds["hook"],-10)
 
 @warning_ignore("unused_parameter")
 func process_physics(delta:float):
