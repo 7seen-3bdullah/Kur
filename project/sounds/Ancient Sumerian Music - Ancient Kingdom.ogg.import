@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c5mnll1r7c06g"
+path="res://.godot/imported/Ancient Sumerian Music - Ancient Kingdom.ogg-48845d2711a2cd56945514d155ef0263.oggvorbisstr"
+
+[deps]
+
+source_file="res://sounds/Ancient Sumerian Music - Ancient Kingdom.ogg"
+dest_files=["res://.godot/imported/Ancient Sumerian Music - Ancient Kingdom.ogg-48845d2711a2cd56945514d155ef0263.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

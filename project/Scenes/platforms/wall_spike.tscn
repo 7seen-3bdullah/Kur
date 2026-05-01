@@ -11,6 +11,7 @@ z_index = -1
 script = ExtResource("1_5sqow")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=729933018]
+visible = false
 texture_filter = 1
 texture = ExtResource("3_pgkgw")
 region_enabled = true

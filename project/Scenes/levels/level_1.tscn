@@ -2272,17 +2272,56 @@ shader_parameter/color = Color(1, 0.9019608, 0.6509804, 0.26666668)
 shader_parameter/hdr = false
 shader_parameter/seed = 5.0
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_0fw05"]
+[sub_resource type="Shader" id="Shader_60gpg"]
+code = "shader_type canvas_item;
+//render_mode unshaded; // optional
+
+// Noise texture
+uniform sampler2D noise_texture: repeat_enable, filter_nearest;
+// Fog density
+uniform float density: hint_range(0.0, 1.0) = 0.25;
+// Fog speed
+uniform vec2 speed = vec2(0.02, 0.01);
+
+
+// Called for every pixel the material is visible on
+void fragment() {
+	// Make the fog slowly move
+	vec2 uv = UV + speed * TIME;
+	// Sample the noise texture
+	float noise = texture(noise_texture, uv).r;
+	// Convert the noise from the (0.0, 1.0) range to the (-1.0, 1.0) range
+	// and clamp it between 0.0 and 1.0 again
+	float fog = clamp(noise * 2.0 - 1.0, 0.0, 1.0);
+	// Apply the fog effect
+	COLOR.a *= fog * density;
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_eugjt"]
 noise_type = 0
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_60gpg"]
-noise = SubResource("FastNoiseLite_0fw05")
+noise = SubResource("FastNoiseLite_eugjt")
 seamless = true
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vovbp"]
-shader = ExtResource("23_60gpg")
+shader = SubResource("Shader_60gpg")
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_60gpg")
-shader_parameter/density = 0.25
+shader_parameter/density = 0.10000000475
+shader_parameter/speed = Vector2(0.02, 0.01)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0fw05"]
+noise_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0fw05"]
+noise = SubResource("FastNoiseLite_0fw05")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_60gpg"]
+shader = ExtResource("23_60gpg")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_0fw05")
+shader_parameter/density = 0.2000000095
 shader_parameter/speed = Vector2(0.02, 0.01)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_flpb6"]
@@ -2315,6 +2354,9 @@ adjustment_enabled = true
 adjustment_brightness = 0.6
 adjustment_contrast = 1.1
 adjustment_saturation = 0.8
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_60gpg"]
+size = Vector2(62, 96)
 
 [node name="level1" type="Node2D" unique_id=587554379]
 script = ExtResource("1_dsuda")
@@ -2853,7 +2895,17 @@ offset_left = -597.0
 offset_top = -362.0
 offset_right = 1146.0
 offset_bottom = 211.0
-color = Color(0.6972954, 0.66606057, 0.61920834, 1)
+color = Color(0.601223, 0.601223, 0.60122293, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="fog2" type="ColorRect" parent="map/lighting" unique_id=1046070594]
+z_index = 5
+material = SubResource("ShaderMaterial_60gpg")
+offset_left = -597.0
+offset_top = -362.0
+offset_right = 1146.0
+offset_bottom = 211.0
+metadata/_edit_use_anchors_ = true
 
 [node name="water" type="Node2D" parent="map" unique_id=1524518714]
 position = Vector2(-552, 0)
@@ -2986,6 +3038,12 @@ texture = ExtResource("21_wxxdo")
 [node name="WorldEnvironment" parent="." unique_id=1231198512 instance=ExtResource("27_nfxff")]
 environment = SubResource("Environment_nfxff")
 
+[node name="next_level" type="Area2D" parent="." unique_id=1298800237]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="next_level" unique_id=2068022995]
+position = Vector2(1704, -229)
+shape = SubResource("RectangleShape2D_60gpg")
+
 [connection signal="body_entered" from="map/platforms/BreakablePlatform18/Area2D" to="map/platforms/BreakablePlatform18" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="map/platforms/BreakablePlatform19/Area2D" to="map/platforms/BreakablePlatform19" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="map/platforms/BreakablePlatform3/Area2D" to="map/platforms/BreakablePlatform3" method="_on_area_2d_body_entered"]
@@ -2997,3 +3055,4 @@ environment = SubResource("Environment_nfxff")
 [connection signal="body_entered" from="map/fallstatic/staticfallareakill" to="." method="_on_staticfallareakill_body_entered"]
 [connection signal="body_entered" from="map/time_slow" to="." method="_on_time_slow_body_entered"]
 [connection signal="body_exited" from="map/time_slow" to="." method="_on_time_slow_body_exited"]
+[connection signal="body_entered" from="next_level" to="." method="_on_next_level_body_entered"]

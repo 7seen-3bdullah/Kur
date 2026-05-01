@@ -5,6 +5,8 @@ const player_texture = preload("uid://bqhue6juny50s")
 const BREAKING_SHADER = preload("uid://bkem7dfitjfev")
 const RUNPARTICALS = preload("uid://b4v1vf3b4eau")
 const GHOST = preload("uid://c052ll7ci4bo6")
+const DIEPARTICALS = preload("uid://d1qv7gp7v13ln")
+const JUMP_PARTICLES = preload("uid://b6upaxnms3wle")
 
 var last_sound_played:AudioStreamOggVorbis = null
 var sounds:Dictionary={
@@ -30,7 +32,10 @@ var sounds:Dictionary={
 	"breaking":preload("uid://do52c77wjeafd"),
 	"breaking2":preload("uid://3us2acthljey"),
 	"breakingvis":preload("uid://78se8au268kp"),
-	"impact":preload("uid://ce55u0ely0xei")
+	"impact":preload("uid://c84kccev6p46q"),
+	"damage":preload("uid://jnn1648bwhk2"),
+	"fadein":preload("uid://u5opon1juhmr") ,
+	"fadeout":preload("uid://b48yiiugkg6l5")
 }
 
 

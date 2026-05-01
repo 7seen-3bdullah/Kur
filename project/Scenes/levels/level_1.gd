@@ -31,7 +31,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		.set_ease(Tween.EASE_IN)
 		await tween.finished
 		Global.camera_shake(6,3)
-		SoundManager.SFX(Preloads.sounds["impact"],0,0.3)
+		SoundManager.SFX(Preloads.sounds["impact"],0,0.9)
 
 
 func _on_staticfallareakill_body_entered(body: Node2D) -> void:
@@ -48,3 +48,12 @@ func _on_time_slow_body_entered(body: Node2D) -> void:
 func _on_time_slow_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		Engine.time_scale = 1.0
+
+
+func _on_next_level_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		Global.level=1
+		Global.last_save_poin = Vector2.ZERO
+		Transitions.start()
+		await get_tree().create_timer(0.5).timeout
+		get_tree().call_deferred("change_scene_to_file","res://Scenes/levels/level_2.tscn")

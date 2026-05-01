@@ -15,6 +15,7 @@ var start_sliding_timer:float
 var jump_locked := false
 var tween_slide:bool=false
 var jump:bool = false
+var particals_delay:float=0
 
 #problem: the player dos not do wall jump when stell press space. the problem meb
 
@@ -25,6 +26,7 @@ func Enter():
 	input_x=input_x_delay
 	time_for_sliding = slide_delay
 	start_sliding_timer = slide_delay
+	particals_delay = 0.1
 	tween_slide_delay = 0.1
 	is_transitioning=false
 	tween_slide=false
@@ -47,6 +49,8 @@ func process(delta:float):
 	
 	if timer_to_fall <=0 and start_sliding_timer <= 0:
 		can_slide = false
+	if particals_delay >0 and parent.is_on_wall():
+		particals_delay -= delta
 	
 	if tween_slide_delay >0 and start_sliding_timer <= 0:
 		tween_slide_delay -= delta
@@ -69,7 +73,8 @@ func process_physics(delta:float):
 	if parent.is_on_wall() and !is_zero_approx(timer_to_fall) and !jump:
 		if start_sliding_timer <= 0:
 			parent.velocity.y = gravity * slide_speed * delta
-			parent.slide_particals(true)
+			
+			if particals_delay <=0:parent.slide_particals(true)
 			if tween_slide:
 				parent.wall_slide(delta)
 	
@@ -86,8 +91,10 @@ func process_physics(delta:float):
 		walljump_buffer_timer=false
 		jump = true
 		parent.slide_particals(false)
+		particals_delay = 0.1
 		parent.state_tween("before_jump","after_jump")
 		SoundManager.SFX(Preloads.sounds["jump"],0,randf_range(0.9,1.1))
+		parent.Jump_particals(true)
 	
 	
 	if grav_timer > 0:

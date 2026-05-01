@@ -29,7 +29,7 @@ func move():
 		await tween.finished
 		if camera_shake:
 			Global.camera_shake(6,6)
-			SoundManager.SFX(Preloads.sounds["impact"],0,0.5)
+			SoundManager.SFX(Preloads.sounds["impact"],-10)
 
 
 func _on_body_entered(body: Node2D) -> void:

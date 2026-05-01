@@ -17,6 +17,7 @@ class_name player
 @onready var dashghost: Timer = $dashghost
 @onready var wave_hook: AnimationPlayer = $wave_hook
 @onready var slide_audio: AudioStreamPlayer = $slide_audio
+@onready var wave: ColorRect = $wave
 
 
 
@@ -58,12 +59,13 @@ func _ready() -> void:
 	Global.Player=self
 	right_wall.add_exception(self)
 	left_wall.add_exception(self)
-	
+	wave.material = wave.material.duplicate()
 	for child in Hook_raycasts.get_children():
 		(child as RayCast2D).add_exception(self)
 	
-	await (get_tree().create_timer(1).timeout)
+	await (get_tree().create_timer(0.5).timeout)
 	start_timer = false
+	Transitions.start()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -334,6 +336,19 @@ func slide_particals(start:bool):
 	if !slide_audio.playing:
 		slide_audio.play()
 
+func Jump_particals(in_wall:bool=false):
+	var jump_part = Preloads.JUMP_PARTICLES.instantiate()
+	get_parent().add_child(jump_part)
+	
+	if in_wall:
+		if nearest_wall ==1:
+			jump_part.position = global_position + Vector2(5,-7)
+			jump_part.rotation_degrees = 90
+		elif nearest_wall == -1:
+			jump_part.position = global_position + Vector2(-5,-7)
+			jump_part.rotation_degrees = -90
+	else:
+		jump_part.position = run_marker_2d.global_position
 
 func set_animation(Name:String=""):
 	if name == "":
@@ -346,12 +361,14 @@ func die():
 	if is_dead:
 		return
 	
+	Global.frame_freeze(0.1,0.2)
 	is_dead = true
-	await Global.frame_freeze(0.0,0.2)
-	_reload_scene()
-
-func _reload_scene():
-	get_tree().reload_current_scene()
+	
+	var diepart := Preloads.DIEPARTICALS.instantiate()
+	get_parent().add_child(diepart)
+	diepart.position = global_position
+	
+	queue_free()
 
 
 func _on_icon_frame_changed() -> void:

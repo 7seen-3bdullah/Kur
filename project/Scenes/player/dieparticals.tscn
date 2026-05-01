@@ -1,0 +1,149 @@
+[gd_scene format=3 uid="uid://d1qv7gp7v13ln"]
+
+[ext_resource type="Script" uid="uid://qxembasngoqo" path="res://Scenes/player/dieparticals.gd" id="1_pay83"]
+
+[sub_resource type="Gradient" id="Gradient_pay83"]
+offsets = PackedFloat32Array(0, 0.3114754, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.08627451)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3ay2h"]
+gradient = SubResource("Gradient_pay83")
+
+[sub_resource type="Curve" id="Curve_h6a2c"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_eurw7"]
+curve = SubResource("Curve_h6a2c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_h6a2c"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 20.0
+initial_velocity_max = 40.0
+gravity = Vector3(0, 0, 0)
+scale_min = 3.0
+scale_max = 4.0
+scale_curve = SubResource("CurveTexture_eurw7")
+color_ramp = SubResource("GradientTexture1D_3ay2h")
+
+[sub_resource type="Shader" id="Shader_eurw7"]
+code = "shader_type canvas_item;
+
+uniform float strength: hint_range(0.0, 0.1, 0.001) = 0.08;
+uniform float radius: hint_range(0.0, 1.0, 0.001) = 0.25;
+
+uniform float aberration: hint_range(0.0, 1.0, 0.001) = 0.425;
+uniform float width: hint_range(0.0, 0.1, 0.0001) = 0.04;
+uniform float feather: hint_range(0.0, 1.0, 0.001) = 0.135;
+
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+void fragment() {
+    vec2 st = SCREEN_UV;
+
+    // هنا الفرق الحقيقي
+    vec2 local_uv = UV;
+    vec2 center = vec2(0.5); // منتصف الـ ColorRect فعلياً
+
+    float aspect_ratio = SCREEN_PIXEL_SIZE.y / SCREEN_PIXEL_SIZE.x;
+
+    vec2 scaled_uv = (local_uv - vec2(0.0, 0.5)) / vec2(1.0, aspect_ratio) + vec2(0.0, 0.5);
+    vec2 dist_center = scaled_uv - center;
+
+    float len = length(dist_center);
+
+    float mask = (1.0 - smoothstep(radius - feather, radius, len)) *
+                 smoothstep(radius - width - feather, radius - width, len);
+
+    vec2 offset = normalize(dist_center) * strength * mask;
+
+    // لازم نحول الإزاحة من local space إلى screen space
+    vec2 final_st = st - offset;
+
+    vec2 abber_vec = offset * aberration * mask;
+
+    vec4 red = texture(SCREEN_TEXTURE, final_st + abber_vec);
+    vec4 blue = texture(SCREEN_TEXTURE, final_st - abber_vec);
+    vec4 ori = texture(SCREEN_TEXTURE, final_st);
+
+    COLOR = vec4(red.r, ori.g, blue.b, 1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eurw7"]
+shader = SubResource("Shader_eurw7")
+shader_parameter/strength = 0.08
+shader_parameter/radius = 0.0
+shader_parameter/aberration = 0.425
+shader_parameter/width = 0.04
+shader_parameter/feather = 0.135
+
+[sub_resource type="Animation" id="Animation_eurw7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("wave:material:shader_parameter/radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_pay83"]
+resource_name = "new_animation"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("wave:material:shader_parameter/radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 0.5),
+"update": 0,
+"values": [0.0, 0.70000003325]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3ay2h"]
+_data = {
+&"RESET": SubResource("Animation_eurw7"),
+&"new_animation": SubResource("Animation_pay83")
+}
+
+[node name="dieparticals" type="GPUParticles2D" unique_id=637416651]
+emitting = false
+amount = 30
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_h6a2c")
+script = ExtResource("1_pay83")
+
+[node name="wave" type="ColorRect" parent="." unique_id=344666738]
+light_mask = 0
+z_index = 7
+material = SubResource("ShaderMaterial_eurw7")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -291.16046
+offset_top = -138.83916
+offset_right = 92.83942
+offset_bottom = 69.03389
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3, 3)
+pivot_offset = Vector2(142, 86.5)
+size_flags_horizontal = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1044780565]
+libraries/ = SubResource("AnimationLibrary_3ay2h")
+autoplay = &"new_animation"
+
+[connection signal="finished" from="." to="." method="_on_finished"]

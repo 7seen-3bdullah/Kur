@@ -25,6 +25,7 @@ buses/default_bus_layout="uid://dwdi8iupkr8v8"
 Preloads="*uid://wkll77nyjd4x"
 Global="*uid://bkem1rtmrjisk"
 SoundManager="*uid://xu4qxti2c7av"
+Transitions="*uid://f4fx5pxt32ls"
 
 [display]
 

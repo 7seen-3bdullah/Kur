@@ -10,7 +10,7 @@ func Enter():
 	jump_locked = Input.is_action_pressed("ui_accept")
 	
 	parent.state_tween("before_jump","after_jump")
-	#parent.jump_particals()
+	parent.Jump_particals()
 	SoundManager.SFX(Preloads.sounds["jump"],0,randf_range(0.9,1.1))
 	
 	if parent.is_on_floor() or coyote_jump:

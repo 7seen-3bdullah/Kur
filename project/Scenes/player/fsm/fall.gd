@@ -68,6 +68,7 @@ func _transition(dir):
 		
 		parent.state_tween("before_touch_grownd","after_touch_grownd")
 		SoundManager.SFX(Preloads.sounds["landing"],-15,randf_range(1.4,1.6))
+		parent.Jump_particals()
 	else:
 		if Input.is_action_just_pressed("ui_accept") and coyote_jump and !is_transitioning:
 			state_transition.emit(self,"jump")

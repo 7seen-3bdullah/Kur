@@ -5,6 +5,7 @@ var launch:bool = false
 var hooked :bool= false
 var dir:Vector2
 
+
 var staick_time:float=0.0
 
 func Enter():

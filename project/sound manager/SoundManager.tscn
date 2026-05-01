@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://xu4qxti2c7av"]
 
 [ext_resource type="Script" uid="uid://c4qgxocqh8c8j" path="res://sound manager/sound_manager.gd" id="1_qhs6n"]
+[ext_resource type="AudioStream" uid="uid://c5mnll1r7c06g" path="res://sounds/Ancient Sumerian Music - Ancient Kingdom.ogg" id="2_1sovv"]
+[ext_resource type="AudioStream" uid="uid://bqfwclq1leoeh" path="res://sounds/cave.ogg" id="2_m6e02"]
 
 [node name="SoundManager" type="Node" unique_id=221587243 node_paths=PackedStringArray("Environment1", "Environment2")]
 process_mode = 3
@@ -9,6 +11,13 @@ Environment1 = NodePath("environment1")
 Environment2 = NodePath("environment2")
 
 [node name="environment1" type="AudioStreamPlayer" parent="." unique_id=1758185056]
+stream = ExtResource("2_1sovv")
+volume_db = -10.0
 autoplay = true
+bus = &"Enviromnment"
 
 [node name="environment2" type="AudioStreamPlayer" parent="." unique_id=1092514479]
+stream = ExtResource("2_m6e02")
+volume_db = -5.0
+autoplay = true
+bus = &"Enviromnment"
