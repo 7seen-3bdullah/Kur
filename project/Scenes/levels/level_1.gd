@@ -8,6 +8,8 @@ var use_hook = false
 func _ready() -> void:
 	if Global.last_save_poin != Vector2.ZERO and Global.level == 0:
 		Global.Player.global_position = Global.last_save_poin
+	
+	Preloads.add_text(Vector2(87.0,110))
 
 func _process(delta: float) -> void:
 	framelabel.text = str(Engine.get_frames_per_second())
@@ -34,6 +36,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 		SoundManager.SFX(Preloads.sounds["impact"],0,0.9)
 
 
+
 func _on_staticfallareakill_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		body.die()
@@ -54,6 +57,6 @@ func _on_next_level_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		Global.level=1
 		Global.last_save_poin = Vector2.ZERO
-		Transitions.start()
-		await get_tree().create_timer(0.5).timeout
+		Transitions.die_trans(false)
+		await get_tree().create_timer(0.6).timeout
 		get_tree().call_deferred("change_scene_to_file","res://Scenes/levels/level_2.tscn")

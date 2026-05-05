@@ -10,6 +10,8 @@ func hook_enter(pos:Vector2):
 	if !first:
 		SoundManager.SFX(Preloads.sounds["rope"],-20)
 		first = true
+		call_deferred("set_monitoring",false)
+		remove_from_group("Anchor_point")
 	icon_2.show()
 	remove_from_group("Anchor_point")
 	tween.tween_property(icon,"scale",Vector2(0.9,1.1),0.08)\

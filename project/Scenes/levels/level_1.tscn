@@ -2995,7 +2995,7 @@ shape = SubResource("RectangleShape2D_e3i2i")
 debug_color = Color(0.7578125, 0, 1, 0.41960785)
 
 [node name="player" parent="." unique_id=382306808 instance=ExtResource("2_2mbx3")]
-position = Vector2(50.73548, 101.44108)
+position = Vector2(50.73548, 155)
 
 [node name="RoomZoneCamera2D" parent="." unique_id=1172675343 instance=ExtResource("10_s5b24")]
 position = Vector2(1536, -184)

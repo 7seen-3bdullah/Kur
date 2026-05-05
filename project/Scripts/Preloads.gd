@@ -7,6 +7,8 @@ const RUNPARTICALS = preload("uid://b4v1vf3b4eau")
 const GHOST = preload("uid://c052ll7ci4bo6")
 const DIEPARTICALS = preload("uid://d1qv7gp7v13ln")
 const JUMP_PARTICLES = preload("uid://b6upaxnms3wle")
+const TUTOTEXT = preload("uid://b3njbgcg2sd78")
+
 
 var last_sound_played:AudioStreamOggVorbis = null
 var sounds:Dictionary={
@@ -74,3 +76,8 @@ func add_scene(scene_to_load: PackedScene, parent: Node, pos: Vector2):
 		node_ref.global_position = pos
 	
 	parent.add_child(node_ref)
+
+func add_text(pos:Vector2):
+	var text = TUTOTEXT.instantiate()
+	text.position = pos
+	add_child(text)
