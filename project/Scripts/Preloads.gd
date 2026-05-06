@@ -76,8 +76,3 @@ func add_scene(scene_to_load: PackedScene, parent: Node, pos: Vector2):
 		node_ref.global_position = pos
 	
 	parent.add_child(node_ref)
-
-func add_text(pos:Vector2):
-	var text = TUTOTEXT.instantiate()
-	text.position = pos
-	add_child(text)

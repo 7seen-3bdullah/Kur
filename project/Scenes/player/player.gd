@@ -30,6 +30,7 @@ var can_hook:bool=false
 var is_hooking:bool=false
 var is_dead:bool=false
 var partrunplaying:bool = false
+var can_use_hook:bool=false
 var hook_raycast_dir:Vector2
 var hook_target_position:Vector2
 var last_input_dir: Vector2i = Vector2i.ZERO
@@ -155,44 +156,46 @@ func Input_dir_update(delta):
 	print("hook dir: ", hook_raycast_dir)
 
 func Hook(delta):
-	if Input.is_action_just_pressed("x"):
-		coyote_x_timer = coyote_time
+	if Input.is_action_just_pressed("x") and can_use_hook:
+		is_hooking = true
+		can_use_hook = false
+		can_hook = true
 	
-	if coyote_x_timer >0:
-		coyote_x_timer -= delta
-	if coyote_hook_miss > 0:
-		coyote_hook_miss -= delta
-	else:
-		can_hook = false
-	
-	
-	if hook_raycast_dir == Vector2(1,0):
-		Hook_raycasts.rotation_degrees = 0
-	elif hook_raycast_dir == Vector2(0,-1):
-		Hook_raycasts.rotation_degrees = -90
-	elif hook_raycast_dir == Vector2(-1,0):
-		Hook_raycasts.rotation_degrees = 180
-	elif hook_raycast_dir == Vector2(0,1):
-		Hook_raycasts.rotation_degrees = 90
-	if hook_raycast_dir == Vector2(1,-1):
-		Hook_raycasts.rotation_degrees = -45
-	elif hook_raycast_dir == Vector2(1,1):
-		Hook_raycasts.rotation_degrees = 45
-	elif hook_raycast_dir == Vector2(-1,-1):
-		Hook_raycasts.rotation_degrees = -135
-	elif hook_raycast_dir == Vector2(-1,1):
-		Hook_raycasts.rotation_degrees = 135
-	
-	print("hook start coll: ", can_hook)
+	#if coyote_x_timer >0:
+		#coyote_x_timer -= delta
+	#if coyote_hook_miss > 0:
+		#coyote_hook_miss -= delta
+	#else:
+		#can_hook = false
+	#
+	#
+	#if hook_raycast_dir == Vector2(1,0):
+		#Hook_raycasts.rotation_degrees = 0
+	#elif hook_raycast_dir == Vector2(0,-1):
+		#Hook_raycasts.rotation_degrees = -90
+	#elif hook_raycast_dir == Vector2(-1,0):
+		#Hook_raycasts.rotation_degrees = 180
+	#elif hook_raycast_dir == Vector2(0,1):
+		#Hook_raycasts.rotation_degrees = 90
+	#if hook_raycast_dir == Vector2(1,-1):
+		#Hook_raycasts.rotation_degrees = -45
+	#elif hook_raycast_dir == Vector2(1,1):
+		#Hook_raycasts.rotation_degrees = 45
+	#elif hook_raycast_dir == Vector2(-1,-1):
+		#Hook_raycasts.rotation_degrees = -135
+	#elif hook_raycast_dir == Vector2(-1,1):
+		#Hook_raycasts.rotation_degrees = 135
+	#
+	#print("hook start coll: ", can_hook)
 
 func hook_raycast_colliding():
 	for child in Hook_raycasts.get_children():
-		if (child as RayCast2D).is_colliding():
+		if (child as RayCast2D).is_colliding() and !is_hooking:
 			var body = child.get_collider()
 			if body != null and body.is_in_group("Anchor_point"):
 				hook_anchor = body.global_position
 				hook_body = body
-				can_hook = true
+				can_use_hook = true
 				coyote_hook_miss = coyote_time
 	
 	#if hook_raycast.is_colliding():

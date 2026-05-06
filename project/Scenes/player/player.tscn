@@ -425,6 +425,438 @@ target_position = Vector2(60, 60)
 collision_mask = 2
 collide_with_areas = true
 
+[node name="hook4" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1081207953]
+rotation = -0.5492267
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook5" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1569704509]
+rotation = -0.62505823
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook6" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1840124894]
+rotation = -0.47352976
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook7" type="RayCast2D" parent="raycast/hook_raycast" unique_id=476446709]
+rotation = -0.313907
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook8" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1216600011]
+rotation = -0.38973853
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook9" type="RayCast2D" parent="raycast/hook_raycast" unique_id=2090866832]
+rotation = -0.23821005
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook10" type="RayCast2D" parent="raycast/hook_raycast" unique_id=2081711198]
+rotation = -0.03769087
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook11" type="RayCast2D" parent="raycast/hook_raycast" unique_id=956981515]
+rotation = -0.1135224
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook12" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1756346590]
+rotation = 0.038006075
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook13" type="RayCast2D" parent="raycast/hook_raycast" unique_id=370406639]
+rotation = 0.23053184
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook14" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1889056972]
+rotation = 0.15470031
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook15" type="RayCast2D" parent="raycast/hook_raycast" unique_id=125562549]
+rotation = 0.3062288
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook16" type="RayCast2D" parent="raycast/hook_raycast" unique_id=464161707]
+rotation = 0.4809235
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook17" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1347010203]
+rotation = 0.40509197
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook18" type="RayCast2D" parent="raycast/hook_raycast" unique_id=193479494]
+rotation = 0.5566205
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook19" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1869200799]
+rotation = 0.7473225
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook20" type="RayCast2D" parent="raycast/hook_raycast" unique_id=970928670]
+rotation = 0.67149097
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook21" type="RayCast2D" parent="raycast/hook_raycast" unique_id=476038607]
+rotation = 0.8230195
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook22" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1606511529]
+rotation = 1.0143263
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook23" type="RayCast2D" parent="raycast/hook_raycast" unique_id=775360172]
+rotation = 0.9384948
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook24" type="RayCast2D" parent="raycast/hook_raycast" unique_id=2052644960]
+rotation = 1.0900233
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook25" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1751842969]
+rotation = 1.295034
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook26" type="RayCast2D" parent="raycast/hook_raycast" unique_id=529138998]
+rotation = 1.2192025
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook27" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1485060933]
+rotation = 1.370731
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook28" type="RayCast2D" parent="raycast/hook_raycast" unique_id=287652123]
+rotation = 1.5555164
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook29" type="RayCast2D" parent="raycast/hook_raycast" unique_id=208639822]
+rotation = 1.4796848
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook30" type="RayCast2D" parent="raycast/hook_raycast" unique_id=849773389]
+rotation = 1.6312133
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook31" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1606993218]
+rotation = 1.8210461
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook32" type="RayCast2D" parent="raycast/hook_raycast" unique_id=137603090]
+rotation = 1.7452146
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook33" type="RayCast2D" parent="raycast/hook_raycast" unique_id=2067699819]
+rotation = 1.896743
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook34" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1242924092]
+rotation = 2.0987654
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook35" type="RayCast2D" parent="raycast/hook_raycast" unique_id=494868558]
+rotation = 2.022934
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook36" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1249634872]
+rotation = 2.1744623
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook37" type="RayCast2D" parent="raycast/hook_raycast" unique_id=350118552]
+rotation = 2.3775
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook38" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1295917999]
+rotation = 2.3016686
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook39" type="RayCast2D" parent="raycast/hook_raycast" unique_id=844514764]
+rotation = 2.453197
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook40" type="RayCast2D" parent="raycast/hook_raycast" unique_id=221706764]
+rotation = 2.6499329
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook41" type="RayCast2D" parent="raycast/hook_raycast" unique_id=608579728]
+rotation = 2.5741014
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook42" type="RayCast2D" parent="raycast/hook_raycast" unique_id=427335851]
+rotation = 2.7256298
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook43" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1745993698]
+rotation = 2.9151196
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook44" type="RayCast2D" parent="raycast/hook_raycast" unique_id=485162967]
+rotation = 2.8392882
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook45" type="RayCast2D" parent="raycast/hook_raycast" unique_id=983568639]
+rotation = 2.9908166
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook46" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1560648057]
+rotation = 3.153313
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook47" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1873396347]
+rotation = 3.0774815
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook48" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1653752085]
+rotation = 3.2290099
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook49" type="RayCast2D" parent="raycast/hook_raycast" unique_id=245032790]
+rotation = 3.396032
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook50" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1365670002]
+rotation = 3.3202007
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook51" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1443228717]
+rotation = 3.471729
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook52" type="RayCast2D" parent="raycast/hook_raycast" unique_id=938131632]
+rotation = 3.6245701
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook53" type="RayCast2D" parent="raycast/hook_raycast" unique_id=931116329]
+rotation = 3.5487387
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook54" type="RayCast2D" parent="raycast/hook_raycast" unique_id=340603973]
+rotation = 3.700267
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook55" type="RayCast2D" parent="raycast/hook_raycast" unique_id=223931215]
+rotation = 3.859712
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook56" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1201808698]
+rotation = 3.7838805
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook57" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1548384275]
+rotation = 3.9354088
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook58" type="RayCast2D" parent="raycast/hook_raycast" unique_id=935517365]
+rotation = 4.093239
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook59" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1716939643]
+rotation = 4.0174074
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook60" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1837922102]
+rotation = 4.168936
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook61" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1860955845]
+rotation = 4.3391495
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook62" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1473040809]
+rotation = 4.263318
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook63" type="RayCast2D" parent="raycast/hook_raycast" unique_id=949207540]
+rotation = 4.4148464
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook64" type="RayCast2D" parent="raycast/hook_raycast" unique_id=192064960]
+rotation = 4.579755
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook65" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1925835667]
+rotation = 4.5039234
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook66" type="RayCast2D" parent="raycast/hook_raycast" unique_id=793084642]
+rotation = 4.655452
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook67" type="RayCast2D" parent="raycast/hook_raycast" unique_id=332206162]
+rotation = 4.819661
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook68" type="RayCast2D" parent="raycast/hook_raycast" unique_id=453190459]
+rotation = 4.7438297
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook69" type="RayCast2D" parent="raycast/hook_raycast" unique_id=59030860]
+rotation = 4.895358
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook70" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1788311393]
+rotation = 5.0585375
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook71" type="RayCast2D" parent="raycast/hook_raycast" unique_id=855694632]
+rotation = 4.982706
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook72" type="RayCast2D" parent="raycast/hook_raycast" unique_id=131708688]
+rotation = 5.1342344
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook73" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1349093414]
+rotation = 5.2789197
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook74" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1227964126]
+rotation = 5.2030883
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
+[node name="hook75" type="RayCast2D" parent="raycast/hook_raycast" unique_id=1595306320]
+rotation = 5.3546166
+target_position = Vector2(60, 60)
+collision_mask = 2
+collide_with_areas = true
+
 [node name="Line2D" type="Line2D" parent="." unique_id=1725505230]
 z_index = 2
 texture_filter = 1

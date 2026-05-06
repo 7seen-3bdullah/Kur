@@ -23,7 +23,7 @@ func process_physics(delta:float):
 	parent.move_and_slide()
 
 func _transtiion(dir):
-	if parent.hook_dir_coyote_timer > 0 and parent.coyote_x_timer >0 and parent.can_hook:
+	if parent.can_hook:
 		if !is_transitioning:
 			is_transitioning = true
 			state_transition.emit(self,"hook")

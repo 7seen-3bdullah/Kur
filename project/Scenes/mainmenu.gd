@@ -14,6 +14,7 @@ const SLIDEUI = preload("uid://dwnw8a8filf8d")
 
 var setting_main_pos:=Vector2(-1440,-816)
 var setting_start_pos:=Vector2(-1000,-816)
+var starting:=false
 
 func _ready() -> void:
 	Transitions.start()
@@ -45,11 +46,14 @@ func setting_show(open:bool):
 
 
 func _on_settingbutton_pressed() -> void:
+	if starting:
+		return
 	await settingbutton.press_tween(0.1)
 	setting_show(true)
 
 
 func _on_backe_pressed() -> void:
+	
 	#await backebut.press_tween(0.1)
 	setting_show(false)
 
@@ -71,6 +75,8 @@ func _on_sfx_value_changed(value: float) -> void:
 
 
 func _on_quit_pressed() -> void:
+	if starting:
+		return
 	await quitbut.press_tween(0.1)
 	Transitions.die_trans(false)
 	await get_tree().create_timer(0.6).timeout
@@ -78,10 +84,13 @@ func _on_quit_pressed() -> void:
 
 
 func _on_start_pressed() -> void:
+	if starting:
+		return
 	await startbu.press_tween(0.1)
 	Transitions.die_trans(false)
 	await get_tree().create_timer(0.6).timeout
 	dialoganim.play("dialog")
+	starting = true
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:
